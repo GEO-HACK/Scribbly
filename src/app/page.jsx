@@ -1,31 +1,19 @@
 import React from "react";
-import Link from "next/link";
+import Featured from "@/components/featured/Featured";
+import CategoryList from "@/components/categoryList/CategoryList";
+import CardList from "@/components/cardList/CardList";
+import Menu from "@/components/menu/Menu";
 
 const page = () => {
   return (
     <div>
-      <Link href="#">
-      <h1 className="text-5xl font-bold">THis is the home of champions</h1>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
-        cumque aliquam facere eaque labore id ea est quisquam expedita assumenda
-        amet illo aut unde! Nulla labore officia maxime odit aliquid.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
-        cumque aliquam facere eaque labore id ea est quisquam expedita assumenda
-        amet illo aut unde! Nulla labore officia maxime odit aliquid.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
-        cumque aliquam facere eaque labore id ea est quisquam expedita assumenda
-        amet illo aut unde! Nulla labore officia maxime odit aliquid.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
-        cumque aliquam facere eaque labore id ea est quisquam expedita assumenda
-        amet illo aut unde! Nulla labore officia maxime odit aliquid.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
-        cumque aliquam facere eaque labore id ea est quisquam expedita assumenda
-        amet illo aut unde! Nulla labore officia maxime odit aliquid.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
-        cumque aliquam facere eaque labore id ea est quisquam expedita assumenda
-        amet illo aut unde! Nulla labore officia maxime odit aliquid.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
-        cumque aliquam facere eaque labore id ea est quisquam expedita assumenda
-        amet illo aut unde! Nulla labore officia maxime odit aliquid.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
-        cumque aliquam facere eaque labore id ea est quisquam expedita assumenda
-        amet illo aut unde! Nulla labore officia maxime odit aliquid.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
-        cumque aliquam facere eaque labore id ea est quisquam expedita assumenda
-        amet illo aut unde! Nulla labore officia maxime odit aliquid.
-      </Link>
+      <Featured/>
+      <CategoryList/>
+      <div>
+        <CardList/>
+        <Menu/>
+      </div>
+      
     </div>
   );
 };
