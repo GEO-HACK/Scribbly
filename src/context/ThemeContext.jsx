@@ -1,35 +1,37 @@
-"use client";
+"use client"
 
-import React, { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from "react"
 
-// Create context
-const ThemeContext = createContext();
+export const ThemeContext = createContext()
 
-// Theme provider component
-export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light');
+// Function to get the theme from localStorage only on the client-side
+const getFromLocalStorage = () => {
+  if (typeof window !== "undefined") {  // Ensure we're on the client-side
+    const value = localStorage.getItem("theme")
+    return value || "light"
+  }
+  return "light" // Default theme if running on the server
+}
+
+export const ThemeContextProvider = ({ children }) => {
+  const [theme, setTheme] = useState("light")
 
   useEffect(() => {
-    // Retrieve the theme from localStorage if available
-    const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('theme') : null;
-    setTheme(storedTheme || 'light');
-  }, []);
+    // Only run on the client-side to avoid SSR errors
+    setTheme(getFromLocalStorage())
+  }, [])
 
-  // Function to toggle theme
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('theme', newTheme);
+    const newTheme = theme === "light" ? "dark" : "light"
+    setTheme(newTheme)
+    if (typeof window !== "undefined") {
+      localStorage.setItem("theme", newTheme)
     }
-  };
+  }
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme: toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
-  );
-};
-
-
-export default ThemeContext;
+  )
+}

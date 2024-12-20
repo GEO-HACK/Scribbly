@@ -1,29 +1,37 @@
-// ThemeToggle.js
-"use client";
+'use client'
 
-import React, { useContext } from 'react';
-import Image from 'next/image';
-import ThemeContext from '@/context/ThemeContext';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
 
 const ThemeToggle = () => {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const [theme, setTheme] = useState(
+    typeof window !== "undefined" && localStorage.getItem("theme") === "dark"
+      ? "dark"
+      : "light"
+  );
 
-  const handleToggle = () => {
-    setTheme(); // Toggle the theme
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
   };
 
   return (
     <div
-      className={`relative flex w-[40px] h-[20px] rounded-[50px] items-center justify-between px-1 cursor-pointer ${
-        theme === 'dark' ? 'bg-black' : 'bg-gray-400'
-      }`}
-      onClick={handleToggle} // Handle the toggle on click
+      onClick={toggleTheme}
+      className={`relative flex w-[40px] h-[20px] rounded-[50px] ${
+        theme === "dark" ? "bg-white" : "bg-black"
+      } items-center justify-between px-1 cursor-pointer`}
     >
       <Image src="/moon.png" alt="moon image" width={14} height={14} />
       <div
-        className={`absolute bg-white w-[15px] h-[15px] rounded-full transition-transform ${
-          theme === 'dark' ? 'translate-x-[20px]' : 'translate-x-0'
-        }`}
+        className={`absolute w-[15px] h-[15px] rounded-full ${
+          theme === "dark" ? "bg-black left-[22px]" : "bg-white left-[2px]"
+        } transition-all`}
       />
       <Image src="/sun.png" alt="sun image" width={14} height={14} />
     </div>
