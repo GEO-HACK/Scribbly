@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <div className="flex-1 flex justify-between h-[100px] items-center">
       {/* Social Handles */}
-      <div className="flex gap-2 flex-1 hidden sm:flex">
+      <div className=" gap-2 flex-1  sm:flex">
         <Image
           src="/facebook.png"
           alt="Facebook logo"
