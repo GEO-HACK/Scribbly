@@ -5,11 +5,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --button-bg: #171717;
 }
 
 [data-theme="dark"] {
   --background: #171717; /* Dark mode background */
   --foreground: #ffffff; /* Dark mode text color */
+  --button-bg:#ffffff;
 }
 
 * {
