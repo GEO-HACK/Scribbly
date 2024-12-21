@@ -5,7 +5,7 @@ import Link from "next/link";
 const Card = () => {
   return (
     <div className="flex gap-[50px] mb-[50px] items-center">
-      <div className="flex-1 relative w-auto h-[350px] ">
+      <div className="flex-1 relative w-auto h-[350px] hidden lg:block">
         <Image
           src="/p1.jpeg"
           alt="this is the post image"

@@ -6,7 +6,7 @@ import MenuCategory from "../menucategory/MenuCategory";
 
 const Menu = () => {
   return (
-    <div className="max-w-[30%] mt-[30px]">
+    <div className="max-w-[30%] mt-[30px] hidden lg:block md:block">
       <h2 className="text-gray-500 font-semibold">what's hot</h2>
       <h1 className="text-xl font-semibold">Most Popular</h1>
       <MenuPosts withImage={false}/>
