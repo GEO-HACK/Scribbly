@@ -30,7 +30,7 @@ const Card = () => {
         </p>
         <Link
          href="#" 
-         className="border-b border-red-500 max-w-max"
+         className="border-b border-red-500 max-w-max pt-2 pb-1" 
         >ReadMore</Link>
       </div>
     </div>
