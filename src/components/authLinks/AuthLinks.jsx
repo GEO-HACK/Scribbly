@@ -2,10 +2,10 @@ import Link from 'next/link'
 import React from 'react'
 
 const AuthLinks = () => {
-    const status = "Authenticated"
+    const status = "notAuthenticated"
   return (
     <>
-    {status ==="notAuthenticated"? (
+    {status ==="Authenticated"? (
         <>
         <Link href="/login" >login</Link>
 
@@ -13,7 +13,7 @@ const AuthLinks = () => {
 
     ):(
         <>
-        <Link href="/Write" >write</Link>
+        <Link href="/write" >write</Link>
         
         <span className='cursor-pointer'>Logout</span>
 
