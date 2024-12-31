@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 
 const AuthLinks = () => {
-    const status = "notAuthenticated"
+    const status = "Authenticated"
   return (
     <>
     {status ==="Authenticated"? (

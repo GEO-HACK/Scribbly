@@ -2,7 +2,10 @@ import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from 'next-auth/providers/facebook';
 
+
+
 export const authOptions = {
+
     providers: [
         GithubProvider({
             clientId: process.env.GITHUB_ID,
@@ -17,4 +20,5 @@ export const authOptions = {
             clientSecret: process.env.FACEBOOK_SECRET,
         }),
     ],
+    secret: process.env.SECRET,
 };
