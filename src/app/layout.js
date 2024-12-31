@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
+import AuthProvider from "@/providers/AuthProvider";
 
 const inter = Inter({
   subsets: ["latin"], // Use the Latin subset
@@ -18,6 +19,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
+        <AuthProvider>
+
         <div className="min-h-screen bg-background text-foreground">
           <div className="container mx-auto px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32">
             <div className="wrapper py-2">
@@ -27,6 +30,7 @@ export default function RootLayout({ children }) {
             </div>
           </div>
         </div>
+        </AuthProvider>
       </body>
     </html>
   );
