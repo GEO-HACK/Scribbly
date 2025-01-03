@@ -3,14 +3,26 @@ import Image from "next/image";
 import Link from "next/link";
 
 const getData = async () => {
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`, {
-    cache: "no-cache",
-  });
+  try {
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`, {
+      cache: "no-cache",
+    });
 
-  if (!res.ok) {
-    throw new Error("Something went wrong");
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const text = await res.text();
+    if (!text) {
+      throw new Error("Empty response from server");
+    }
+
+    const json = JSON.parse(text);
+    return json;
+  } catch (error) {
+    console.error("Error fetching categories:", error.message);
+    return []; // Return an empty array as fallback
   }
-  return res.json();
 };
 
 // Function to hash the category ID for consistent background colors
@@ -21,13 +33,24 @@ const hashId = (id) => {
 const CategoryList = async () => {
   const data = await getData();
 
+  if (data.length === 0) {
+    return (
+      <div className="text-center">
+        <h1 className="mt-[50px] mb-[50px] font-semibold text-xl">
+          Popular Categories
+        </h1>
+        <p className="text-gray-600">No categories available at the moment.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="">
-      <h1 className="mt-[50px] mb-[50px] font-semibold text-xl">
+    <div className="p-4">
+      <h1 className="mt-[50px] mb-[50px] font-semibold text-xl text-center">
         Popular Categories
       </h1>
       <div className="flex flex-wrap justify-center gap-4 sm:justify-around">
-        {data?.map((category, index) => (
+        {data.map((category, index) => (
           <Link
             key={category.id}
             href={`/blog?cat=${category.title}`}
@@ -43,7 +66,7 @@ const CategoryList = async () => {
             } p-2 w-[150px] justify-center rounded-md text-gray-600 font-semibold`}
           >
             <Image
-              src={`/${category.name}.png`}
+              src={category.img || "/placeholder.png"} // Fallback for missing image
               alt={`${category.title} category`}
               width={32}
               height={32}
