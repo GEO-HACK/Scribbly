@@ -11,6 +11,7 @@ const CardList = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const currentPage = parseInt(searchParams.get("page")) || 1; // Get current page from query params
   const [page, setPage] = useState(currentPage);
+  
 
   // Fetch data when page changes
   useEffect(() => {

@@ -9,21 +9,18 @@ const getData = async () => {
     });
 
     if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
+      const errorText = await res.text();
+      throw new Error(`HTTP error! status: ${res.status}, message: ${errorText}`);
     }
 
-    const text = await res.text();
-    if (!text) {
-      throw new Error("Empty response from server");
-    }
-
-    const json = JSON.parse(text);
-    return json;
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.error("Error fetching categories:", error.message);
-    return []; // Return an empty array as fallback
+    return [];
   }
 };
+
 
 // Function to hash the category ID for consistent background colors
 const hashId = (id) => {
