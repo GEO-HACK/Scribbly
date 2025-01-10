@@ -23,10 +23,7 @@ const Card = ( {key,item}) => {
   
         </Link>
         <p className="font-[18px] font-md text-gray">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis
-          distinctio laudantium saepe provident sunt maiores, ut aliquid at
-          nihil modi sequi illum dolore nisi in blanditiis odit optio.
-          Praesentium, similique.
+          {item.desc} 
         </p>
         <Link
          href="#" 

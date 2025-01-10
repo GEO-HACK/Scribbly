@@ -1,40 +1,48 @@
-import React from "react";
-import Pagination from "../pagination/Pagination";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation"; // Proper router handling
 import Card from "../card/Card";
+import Pagination from "../pagination/Pagination";
 
-const getData = async () => {
-  try {
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/posts?page=S{page}`, {
-      cache: "no-cache",
-    });
+const CardList = () => {
+  const [data, setData] = useState([]);
+  const router = useRouter();
+  const searchParams = new URLSearchParams(window.location.search);
+  const currentPage = parseInt(searchParams.get("page")) || 1; // Get current page from query params
+  const [page, setPage] = useState(currentPage);
 
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
+  // Fetch data when page changes
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`/api/posts?page=${page}`, { cache: "no-cache" });
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const json = await res.json();
+        setData(json);
+      } catch (error) {
+        console.error("Error fetching posts:", error.message);
+        setData([]); // Fallback to an empty array
+      }
+    };
 
-    const text = await res.text();
-    if (!text) {
-      throw new Error("Empty response from server");
-    }
+    fetchData();
+  }, [page]);
 
-    const json = JSON.parse(text);
-    return json;
-  } catch (error) {
-    console.error("Error fetching posts:", error.message);
-    return []; // Return an empty array as fallback
-  }
-};
-const CardList = async ({page}) => {
-  const data = await getData(page)
+  // Update URL when page changes
+  useEffect(() => {
+    router.push(`/?page=${page}`);
+  }, [page]);
+
   return (
     <div className="max-w-[70%]">
       <h1 className="font-semibold text-xl mt-4 mb-4">Recent Posts</h1>
-      <div className="flex flex-col ">
-        {data?.map((item) => (
+      <div className="flex flex-col">
+        {data.map((item) => (
           <Card key={item._id} item={item} />
-        ))}        
+        ))}
       </div>
-      <Pagination />
+      <Pagination page={page} setPage={setPage} />
     </div>
   );
 };
