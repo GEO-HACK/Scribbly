@@ -1,17 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation"; // Proper router handling
+import { useRouter, useSearchParams } from "next/navigation";
 import Card from "../card/Card";
 import Pagination from "../pagination/Pagination";
 
 const CardList = () => {
   const [data, setData] = useState([]);
-  const router = useRouter();
-  const searchParams = new URLSearchParams(window.location.search);
-  const currentPage = parseInt(searchParams.get("page")) || 1; // Get current page from query params
+  const searchParams = useSearchParams();
+  const currentPage = parseInt(searchParams.get("page")) || 1;
   const [page, setPage] = useState(currentPage);
-  
+  const [hasNext, setHasNext] = useState(true); // Assume there's a next page initially
+  const router = useRouter();
 
   // Fetch data when page changes
   useEffect(() => {
@@ -20,10 +20,13 @@ const CardList = () => {
         const res = await fetch(`/api/posts?page=${page}`, { cache: "no-cache" });
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const json = await res.json();
+        
         setData(json);
+        setHasNext(json.length > 0); // If no items, disable Next button
       } catch (error) {
         console.error("Error fetching posts:", error.message);
-        setData([]); // Fallback to an empty array
+        setData([]);
+        setHasNext(false);
       }
     };
 
@@ -39,11 +42,13 @@ const CardList = () => {
     <div className="max-w-[70%]">
       <h1 className="font-semibold text-xl mt-4 mb-4">Recent Posts</h1>
       <div className="flex flex-col">
-        {data.map((item) => (
-          <Card key={item._id} item={item} />
-        ))}
+        {data.length > 0 ? (
+          data.map((item) => <Card key={item._id} item={item} />)
+        ) : (
+          <p>No posts available.</p>
+        )}
       </div>
-      <Pagination page={page} setPage={setPage} />
+      <Pagination page={page} setPage={setPage} hasNext={hasNext} />
     </div>
   );
 };
