@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Card from "../card/Card";
 import Pagination from "../pagination/Pagination";
@@ -8,11 +8,20 @@ import Pagination from "../pagination/Pagination";
 const CardList = () => {
   const [data, setData] = useState([]);
   const searchParams = useSearchParams();
-  const currentPage = parseInt(searchParams.get("page")) || 1;
-  const [page, setPage] = useState(currentPage);
+  // const currentPage = parseInt(searchParams.get("page")) || 1;
+  const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(true); // Assume there's a next page initially
   const router = useRouter();
 
+
+
+  //awaiting the search params with an async
+  useEffect(() => {
+    //when search params change, update the page state
+    const pageFromParams = parseInt(searchParams.get("page")) || 1;
+    setPage(pageFromParams);
+
+  }, [searchParams]);
   // Fetch data when page changes
   useEffect(() => {
     const fetchData = async () => {

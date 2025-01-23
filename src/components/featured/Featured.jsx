@@ -22,19 +22,17 @@ const Featured = () => {
         {/* Text Section */}
         <div className="flex-1 flex flex-col gap-4 items-start justify-center">
           <h1 className="text-2xl lg:text-3xl font-semibold text-center lg:text-left">
-            Lorem ipsum dolor sit amet consectetur adipisicing
+            Capture your thoughts, shape your ideas and share your stories
           </h1>
           <p className="text-sm lg:text-md font-light text-gray-500 text-center lg:text-left">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit at
-            dolor et earum doloremque, numquam cum obcaecati iste aspernatur
-            impedit. Porro est nisi nobis, ad facilis repellat doloremque fuga
-            sed.
+            Scribbly is your space to write , create and share your stories with
+            the world.Whether you are journaling , brainstorming or crafting the
+            next big idea, we provide the tools to bring your words to
+            life.Start writting today and let your ideas flow freely.
           </p>
 
           <div className="flex justify-center lg:justify-start w-full">
-            <button
-              className="px-6 py-2 text-white rounded-md bg-gray-800 hover:bg-gray-700 transition duration-300"
-            >
+            <button className="px-6 py-2 text-white rounded-md bg-gray-800 hover:bg-gray-700 transition duration-300">
               Read More
             </button>
           </div>

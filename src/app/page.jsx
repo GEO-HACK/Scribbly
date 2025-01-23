@@ -9,9 +9,6 @@ const Page = ({searchParams}) => {
 
   const page = parseInt(searchParams.page) || 1;
 
-
-
-
   return (
     <div>
       <Featured />
