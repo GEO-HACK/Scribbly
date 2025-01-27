@@ -5,9 +5,9 @@ import CategoryList from "@/components/categoryList/CategoryList";
 import CardList from "@/components/cardList/CardList";
 import Menu from "@/components/menu/Menu";
 
-const Page = ({searchParams}) => {
+const Page = async ({searchParams}) => {
 
-  const page = parseInt(searchParams.page) || 1;
+  const page = parseInt(searchParams.page || "1", 10) ;
 
   return (
     <div>
