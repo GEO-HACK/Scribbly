@@ -60,7 +60,9 @@ const page = () => {
         <div className="flex flex-col gap-4 w-[50%] p-6">
           <div className="flex flex-row gap-4">
             <div className="flex flex-col bg-gray-200 p-3">
-              <h1 className="text-xl font-semibold text-stone-500">Empowering Voices</h1>
+              <h1 className="text-xl font-semibold text-stone-500">
+                Empowering Voices
+              </h1>
               <p className="text-gray-500 mt-2 text-lg leading-relaxed">
                 We believe everyone has something valuable to share. We aim to
                 empower individuals to find their voice and connect with others
@@ -68,7 +70,9 @@ const page = () => {
               </p>
             </div>
             <div className="flex flex-col bg-gray-200 p-3">
-              <h1 className="text-xl font-semibold text-stone-500">Cultivating Creativity</h1>
+              <h1 className="text-xl font-semibold text-stone-500">
+                Cultivating Creativity
+              </h1>
               <p className="text-gray-500 mt-2 text-lg leading-relaxed">
                 Scribbly provides a space for exploration, experimentation, and
                 growth. We want to foster a culture of creativity and inspire
@@ -78,7 +82,9 @@ const page = () => {
           </div>
 
           <div className="flex flex-col bg-gray-200 p-3">
-            <h1 className="text-xl font-semibold text-stone-500 ">Building Community</h1>
+            <h1 className="text-xl font-semibold text-stone-500 ">
+              Building Community
+            </h1>
             <p className="text-gray-500 mt-2 text-lg leading-relaxed">
               We strive to create a welcoming and inclusive environment where
               people can engage in meaningful conversations and build lasting
@@ -98,9 +104,92 @@ const page = () => {
 
       {/* fourth section */}
       <div className="flex items-center bg-orange-500 h-[600px]">
-        <div className=" flex flex-col bg-white h-[350px] w-[90%] mx-auto p-6">
+        <div className=" flex flex-col bg-white h-[350px] w-[90%] mx-auto p-6 items-center">
           <h1 className="text-3xl font-semibold">How Scribbly works</h1>
-         
+
+          <div className="flex flex-row gap-4 mt-5 px-6 justify-between">
+            <div className="flex flex-col items-center w-[30%]">
+              <div className="bg-gray-300 rounded-full h-12 w-12 flex items-center justify-center">
+                <span className="text-xl font-bold">1</span>
+              </div>
+              <h1 className="text-xl font-semibold mt-4">Sign Up</h1>
+              <p className="text-gray-500 mt-2 text-lg leading-relaxed text-center">
+                Create an account to start sharing your ideas and joining the
+                Scribbly community.
+              </p>
+            </div>
+            <div className="flex flex-col items-center w-[30%]">
+              <div className="bg-gray-300 rounded-full h-12 w-12 flex items-center justify-center">
+                <span className="text-xl font-bold">2</span>
+              </div>
+              <h1 className="text-xl font-semibold mt-4">start scribbling</h1>
+              <p className="text-gray-500 mt-2 text-lg leading-relaxed text-center">
+                Write your thoughts, stories, or poems. Use our tools to format
+                your content and add visual elements.
+              </p>
+            </div>
+            <div className="flex flex-col items-center w-[30%]">
+              <div className="bg-gray-300 rounded-full h-12 w-12 flex items-center justify-center">
+                <span className="text-xl font-bold">3</span>
+              </div>
+              <h1 className="text-xl font-semibold mt-4">
+                Share your scribble
+              </h1>
+              <p className="text-gray-500 mt-2 text-lg leading-relaxed text-center">
+                Publish your scribble and share it with the community. You can
+                choose to make it public or private.
+              </p>
+            </div>
+            <div className="flex flex-col items-center w-[30%]">
+              <div className="bg-gray-300 rounded-full h-12 w-12 flex items-center justify-center">
+                <span className="text-xl font-bold">4</span>
+              </div>
+              <h1 className="text-xl font-semibold mt-4">Engage & connect</h1>
+              <p className="text-gray-500 mt-2 text-lg leading-relaxed text-center">
+                Read other scribbles, leave comments, and connect with fellow
+                Scribblers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* fifth section */}
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-col p-6 w-[50%]">
+          <h1 className="text-3xl">Share your thoughts</h1>
+
+          <div className="flex flex-row gap-4 mt-5">
+            <div className=" flex flex-col p-3 w-[40%]">
+              <h1 className="text-lg text-stone-500">Write</h1>
+              <p className="text-gray-500 text-md">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa
+                quod nulla recusandae,
+              </p>
+            </div>
+            <div className="  flex flex-col p-3 w-[40%]">
+              <h1 className="text-lg text-stone-500">Express</h1>
+              <p className="text-gray-500 text-md">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem
+                accusamus aspernatur
+              </p>
+            </div>
+          </div>
+          <div className="  flex flex-col p-3 mt-5 w-[40%]">
+              <h1 className="text-lg text-stone-500">Connect</h1>
+              <p className="text-gray-500 text-md">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem
+                accusamus aspernatur
+              </p>
+            </div>
+        </div>
+        <div>
+          <Image
+            src="/create.jpg"
+            alt="this is creativity section image"
+            width={400}
+            height={400}
+          />
         </div>
       </div>
     </>
