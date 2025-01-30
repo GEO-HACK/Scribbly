@@ -2,9 +2,9 @@ import React from "react";
 import Image from "next/image"; 
 import Link from "next/link";
 
-const Card = ( {key,item}) => {
+const Card = ( {item}) => {
   return (
-    <div className="flex gap-[50px] mb-[50px] items-center" key={key}>
+    <div className="flex gap-[50px] mb-[50px] items-center" >
       <div className="flex-1 relative w-auto h-[350px] hidden lg:block">
         <Image
           src="/p1.jpeg"

@@ -11,7 +11,7 @@ const Page = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (status === "authenticated") {
+    if (status === "authenticated" && router.pathname === "/login") {
       router.push("/"); // Redirect to the dashboard
     }
   }, [status, router]);

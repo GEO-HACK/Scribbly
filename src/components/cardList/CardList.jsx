@@ -44,7 +44,9 @@ const CardList = () => {
 
   // Update URL when page changes
   useEffect(() => {
-    router.push(`/?page=${page}`);
+    // updating depending on the page since the component is used by two pages
+    const currentPath = window.location.pathname;
+    router.push(`${currentPath}?page=${page}`);
   }, [page]);
 
   return (
@@ -52,7 +54,7 @@ const CardList = () => {
       <h1 className="font-semibold text-xl mt-4 mb-4">Recent Posts</h1>
       <div className="flex flex-col">
         {data.length > 0 ? (
-          data.map((item) => <Card key={item._id} item={item} />)
+          data.map((item) => <Card key={item.id} item={item} />)
         ) : (
           <p>No posts available.</p>
         )}
