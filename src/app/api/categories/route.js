@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../utils/connect";
+import { PrismaClient } from "@prisma/client";
 
 export const GET = async () => {
+
     try {
+        
         const categories = await prisma.category.findMany();
       
         if (!categories.length) {
