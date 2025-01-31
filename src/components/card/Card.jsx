@@ -15,7 +15,7 @@ const Card = ( {item}) => {
       </div>
       <div className="flex-1 flex flex-col gap-[30px]">
         <div className="">
-          <span className="text-gray-400">12.12.2024</span>
+          <span className="text-gray-400">{item.createdAt.substring(0,10)}</span>
           <span className="text-red-600 font-semibold"> - {item.catSlug.toUpperCase()}</span>
         </div>
         <Link href="/">
