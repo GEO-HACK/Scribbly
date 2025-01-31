@@ -3,7 +3,6 @@ import Menu from "@/components/menu/Menu";
 import Image from "next/image";
 import Comments from "@/components/comments/Comments";
 
-
 const fetchData = async (slug) => {
   try {
     const query = `${process.env.NEXTAUTH_URL}/api/posts/${slug}`;
@@ -18,15 +17,14 @@ const fetchData = async (slug) => {
     return null;
   }
 };
-const singlePage =  async ({params}) => {
-
-  "use server"
-  if (!params || !params.slug){
-    return <p>Error: missing slug</p>
+const singlePage = async ({ params }) => {
+  "use server";
+  if (!params || !params.slug) {
+    return <p>Error: missing slug</p>;
   }
 
-  const {slug} = params;
-  const data = await fetchData(params.slug)
+  const { slug } = params;
+  const data = await fetchData(params.slug);
   return (
     <div>
       <div className="flex flex-wrap items-center gap-[30px] md:gap-[50px]">
@@ -37,20 +35,21 @@ const singlePage =  async ({params}) => {
           </h1>
           <div className="flex gap-2 items-center">
             <div>
-              {data.user.image &&     <Image
-                src={data?.user.image || "/placeholder.jpg"}
-                alt=""
-                width={30}
-                height={30}
-                className="w-10 h-10 rounded-full"
-              />}
-          
+              {data.user.image && (
+                <Image
+                  src={data?.user.image || "/placeholder.jpg"}
+                  alt=""
+                  width={30}
+                  height={30}
+                  className="w-10 h-10 rounded-full"
+                />
+              )}
             </div>
             <div className="flex flex-col">
               <span className="font-semibold text-sm">{data?.user.name}</span>
               <span className="text-[12px] text-gray-400 font-bold">
                 {/* {data?.createdAt.substring(0,10)}-{" "} */}
-              {new Date(data.createdAt).toLocaleDateString()}
+                {new Date(data.createdAt).toLocaleDateString()}
               </span>
             </div>
           </div>
@@ -72,15 +71,12 @@ const singlePage =  async ({params}) => {
         {/* Content Section */}
         <div className="w-full md:w-[70%]">
           <div
-           className="flex flex-col gap-[20px] md:gap-[30px]"
-           dangerouslySetInnerHTML={{__html:data?.desc}}
-
+            className="flex flex-col gap-[20px] md:gap-[30px]"
+            dangerouslySetInnerHTML={{ __html: data?.desc }}
           />
-           
-          
-          
+
           <div className="mt-10">
-            <Comments />
+            <Comments postSlug={slug} />
           </div>
         </div>
         {/* Sidebar Menu */}

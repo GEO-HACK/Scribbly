@@ -27,7 +27,8 @@
     "slate": "^0.112.0",
     "slate-history": "^0.110.3",
     "slate-hyperscript": "^0.100.0",
-    "slate-react": "^0.112.0"
+    "slate-react": "^0.112.0",
+    "swr": "^2.3.0"
   },
   "devDependencies": {
     "postcss": "^8",
