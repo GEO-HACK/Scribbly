@@ -20,18 +20,18 @@ const Card = ({ item }) => {
       <div className="flex-1 flex flex-col gap-[30px]">
         <div className="">
           <span className="text-gray-400">
-            {item.createdAt.substring(0, 10)}
+            {item.createdAt.substring(0, 10)}-{"  "}
           </span>
           <span className="text-red-600 font-semibold">
             {" "}
-            - {item.catSlug.toUpperCase()}
+            {item.catSlug.toUpperCase()}
           </span>
         </div>
-        <Link href="/">
+        <Link href={`/posts/${item.slug}`} >
           <h1 className="font-bold text-xl">{item.title}</h1>
         </Link>
-        <p className="font-[18px] font-md text-gray">{item.desc}</p>
-        <Link href="#" className="border-b border-red-500 max-w-max pt-2 pb-1">
+        <p className="font-[18px] font-md text-gray">{item.desc.substring(0,80)}</p>
+        <Link href={`/posts/${item.slug}`} className="border-b border-red-500 max-w-max pt-2 pb-1">
           ReadMore
         </Link>
       </div>

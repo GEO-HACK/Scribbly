@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Featured = () => {
   return (
@@ -32,9 +33,11 @@ const Featured = () => {
           </p>
 
           <div className="flex justify-center lg:justify-start w-full">
-            <button className="px-6 py-2 text-white rounded-md bg-gray-800 hover:bg-gray-700 transition duration-300">
+          <Link href="/about">
+          <button className="px-6 py-2 text-white rounded-md bg-gray-800 hover:bg-gray-700 transition duration-300">
               Read More
             </button>
+          </Link>
           </div>
         </div>
       </div>
