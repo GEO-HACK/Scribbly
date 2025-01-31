@@ -3,19 +3,16 @@ import CategoryList from "@/components/categoryList/CategoryList";
 import CardList from "@/components/cardList/CardList";
 import Menu from "@/components/menu/Menu";
 
-const Page = async ({ searchParams }) => {
-  // Ensure searchParams is awaited properly
-  const { page = "1", cat = null } = searchParams ?? {};
-
-  // Parse the page number as an integer, defaulting to 1
-  const pageNum = parseInt(page, 10);
+const Page = ({ searchParams }) => {
+  const page = parseInt(searchParams?.page || "1", 10);
+  const cat = searchParams?.cat || null; 
 
   return (
     <div>
       <Featured />
       <CategoryList />
       <div className="flex gap-[50px] mt-6">
-        <CardList page={pageNum} cat={cat} />
+        <CardList page={page} cat={cat} />
         <Menu />
       </div>
     </div>
