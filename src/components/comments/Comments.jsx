@@ -42,14 +42,14 @@ const Comments = ({ postSlug }) => {
       });
 
       const text = await res.text(); // Get raw response text for debugging
-      console.log("Raw response:", text);
+      
 
       if (!res.ok) {
         throw new Error(`Server error: ${res.status} - ${res.statusText}`);
       }
 
       const data = JSON.parse(text); // Parse the JSON response
-      console.log("Parsed data:", data);
+      
 
       mutate(); // Refresh comments list after submitting
       setDesc(""); // Clear textarea after submission

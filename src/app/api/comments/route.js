@@ -42,7 +42,6 @@ export const POST = async (req) => {
       },
     });
 
-    console.log("New comment created:", newComment); // Log created comment for debugging
 
     return NextResponse.json(newComment, { status: 201 }); // Return new comment in response
   } catch (error) {
