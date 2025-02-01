@@ -42,7 +42,7 @@ const Page = () => {
       ListItem,
       Blockquote,
     ],
-    content: "<p>Write something awesome</p>",
+    content: "<p>Write something awesome...</p>",
   });
 
   if (status === "loading") {

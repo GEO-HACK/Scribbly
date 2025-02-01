@@ -1,82 +1,101 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ThemeToggle from "../themeToggle/ThemeToggle";
 import AuthLinks from "../authLinks/AuthLinks";
+import { motion } from "framer-motion";
+import { useTheme } from "next-themes";
 
 const Navbar = () => {
-    const [isMenuopen, setIsMenuopen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { theme } = useTheme(); // Get current theme
 
-    const toggleMenu = ()=>{
-        setIsMenuopen(!isMenuopen)
-    }
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
-    const closeMenu = ()=>
-    {
-        setIsMenuopen(false)
-    }
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
-    <div className="flex-1 flex justify-between h-[100px] items-center">
-      {/* Social Handles */}
-      <div className=" gap-2 flex-1 hidden  sm:flex">
-        <Image
-          src="/facebook.png"
-          alt="Facebook logo"
-          width={24}
-          height={24}
-        />
-        <Image
-          src="/instagram.png"
-          alt="Instagram logo"
-          width={24}
-          height={24}
-        />
-        <Image src="/tiktok.png" alt="TikTok logo" width={24} height={24} />
-        <Image src="/youtube.png" alt="YouTube logo" width={24} height={24} />
+    <div className="flex justify-between items-center h-[80px] px-6 md:px-10 border-b border-gray-200 dark:border-gray-700">
+      {/* Social Media Icons */}
+      <div className="hidden sm:flex items-center gap-3">
+        {["facebook", "instagram", "tiktok", "youtube"].map((platform) => (
+          <Image
+            key={platform}
+            src={`/${platform}.png`}
+            alt={`${platform} logo`}
+            width={24}
+            height={24}
+            className="hover:scale-110 transition-transform"
+          />
+        ))}
       </div>
 
       {/* Brand Name */}
-      <div className="flex-1 font-bold text-[36px] text-center">Scribbly</div>
+      <h1 className="text-3xl font-bold text-center">Scribbly</h1>
 
-      {/* Navigation Links and Theme Toggle */}
-      <div className="flex-1 flex gap-3 px-2 text-sm font-semibolda">
+      {/* Desktop Navigation + Theme Toggle */}
+      <div className="hidden sm:flex items-center gap-6">
+        {["/", "/contact", "/about"].map((path, index) => (
+          <Link
+            key={index}
+            href={path}
+            className={`relative px-3 py-1 font-semibold transition-colors ${
+              theme === "dark"
+                ? "text-gray-200 hover:text-blue-400"
+                : "text-gray-800 hover:text-blue-600"
+            }`}
+          >
+            {path === "/" ? "Home" : path.replace("/", "").charAt(0).toUpperCase() + path.slice(2)}
+            <motion.div
+              className="absolute left-0 bottom-0 w-full h-[2px] bg-current"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.3 }}
+            />
+          </Link>
+        ))}
+        <AuthLinks />
         <ThemeToggle />
-
-        {/* burger menu */}
-        <button 
-        onClick={toggleMenu}
-        className="block sm:hidden text-xl focus:outline-none"
-        >
-            ☰ 
-        </button>
-        <div
-          className={`absolute top-[100px] left-0 w-full bg-background shadow-md p-4 sm:static sm:bg-transparent sm:shadow-none sm:p-0 sm:flex sm:gap-2 ${
-            isMenuopen ? "block" : "hidden"
-          }`}
-        >
-          <div className="flex flex-col sm:flex-row sm:gap-4">
-            <Link
-            onClick={closeMenu}
-             href="/" className="block py-2 sm:py-0">
-              HomePage
-            </Link>
-            <Link
-            onClick={closeMenu}
-
-             href="/contact" className="block py-2 sm:py-0">
-              Contact
-            </Link>
-            <Link
-            onClick={closeMenu}
-             href="/about" className="block py-2 sm:py-0">
-              About
-            </Link>
-            <AuthLinks />
-          </div>
-          </div>
       </div>
+
+      {/* Mobile Menu Button */}
+      <button
+        onClick={toggleMenu}
+        className="sm:hidden text-2xl focus:outline-none"
+      >
+        ☰
+      </button>
+
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="absolute top-[80px] left-0 w-full bg-background shadow-lg sm:hidden"
+        >
+          <div className="flex flex-col p-4 gap-4">
+            {["/", "/contact", "/about"].map((path, index) => (
+              <Link
+                key={index}
+                href={path}
+                onClick={closeMenu}
+                className="text-lg font-semibold py-2 border-b dark:border-gray-600 hover:text-blue-500 transition-colors"
+              >
+                {path === "/" ? "Home" : path.replace("/", "").charAt(0).toUpperCase() + path.slice(2)}
+              </Link>
+            ))}
+            <AuthLinks />
+            <ThemeToggle />
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 };
