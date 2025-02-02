@@ -1,5 +1,8 @@
 import React from "react";
 import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
+
 const page = () => {
   return (
     <>
@@ -30,7 +33,9 @@ const page = () => {
       {/* second section */}
       <div className="flex items-center bg-orange-500 h-[600px]">
         <div className=" flex flex-col bg-white h-[350px] w-[90%] mx-auto p-6">
-          <h1 className="text-4xl font-semibold text-black dark:text-white">About Scribbly</h1>
+          <h1 className="text-4xl font-semibold text-black dark:text-white">
+            About Scribbly
+          </h1>
           <div className="flex flex-row gap-4 mt-5 px-6 justify-between">
             <div className="flex flex-col w-[40%]">
               <h1 className="text-xl font-semibold text-black dark:text-white">
@@ -44,7 +49,9 @@ const page = () => {
               </p>
             </div>
             <div className="flex flex-col w-[40%]">
-              <h1 className="text-xl font-semibold text-black dark:text-white">A community of Thinkers</h1>
+              <h1 className="text-xl font-semibold text-black dark:text-white">
+                A community of Thinkers
+              </h1>
               <p className="text-gray-500 dark:text-gray-300 mt-2 text-lg leading-relax">
                 Our community is a diverse group of individuals who share a
                 passion for creative expression. Connect with like-minded
@@ -105,14 +112,18 @@ const page = () => {
       {/* fourth section */}
       <div className="flex items-center bg-orange-500 h-[600px]">
         <div className=" flex flex-col bg-white h-[350px] w-[90%] mx-auto p-6 items-center">
-          <h1 className="text-3xl font-semibold text-black dark:text-white">How Scribbly works</h1>
+          <h1 className="text-3xl font-semibold text-black dark:text-white">
+            How Scribbly works
+          </h1>
 
           <div className="flex flex-row gap-4 mt-5 px-6 justify-between">
             <div className="flex flex-col items-center w-[30%]">
               <div className="bg-gray-300 rounded-full h-12 w-12 flex items-center justify-center">
                 <span className="text-xl font-bold">1</span>
               </div>
-              <h1 className="text-xl font-semibold mt-4 text-black dark:text-white">Sign Up</h1>
+              <h1 className="text-xl font-semibold mt-4 text-black dark:text-white">
+                Sign Up
+              </h1>
               <p className="text-gray-500 dark:text-gray-300 mt-2 text-lg leading-relaxed text-center">
                 Create an account to start sharing your ideas and joining the
                 Scribbly community.
@@ -122,7 +133,9 @@ const page = () => {
               <div className="bg-gray-300 rounded-full h-12 w-12 flex items-center justify-center">
                 <span className="text-xl font-bold">2</span>
               </div>
-              <h1 className="text-xl font-semibold mt-4 text-black dark:text-white">start scribbling</h1>
+              <h1 className="text-xl font-semibold mt-4 text-black dark:text-white">
+                start scribbling
+              </h1>
               <p className="text-gray-500 dark:text-gray-300 mt-2 text-lg leading-relaxed text-center">
                 Write your thoughts, stories, or poems. Use our tools to format
                 your content and add visual elements.
@@ -144,7 +157,9 @@ const page = () => {
               <div className="bg-gray-300 rounded-full h-12 w-12 flex items-center justify-center">
                 <span className="text-xl font-bold">4</span>
               </div>
-              <h1 className="text-xl font-semibold mt-4 text-black dark:text-white">Engage & connect</h1>
+              <h1 className="text-xl font-semibold mt-4 text-black dark:text-white">
+                Engage & connect
+              </h1>
               <p className="text-gray-500 dark:text-gray-300 mt-2 text-lg leading-relaxed text-center">
                 Read other scribbles, leave comments, and connect with fellow
                 Scribblers.
@@ -157,31 +172,52 @@ const page = () => {
       {/* fifth section */}
       <div className="flex flex-row justify-between">
         <div className="flex flex-col p-6 w-[50%]">
-          <h1 className="text-3xl text-black dark:text-white">Share your thoughts</h1>
+          <h1 className="text-3xl text-black dark:text-white">
+            Share your thoughts
+          </h1>
 
           <div className="flex flex-row gap-4 mt-5">
             <div className=" flex flex-col p-3 w-[40%]">
-              <h1 className="text-lg text-stone-500 dark:text-stone-300">Write</h1>
+              <FontAwesomeIcon
+                icon={faPen}
+                className="w-6 h-6 text-orange-500 hover:text-yellow-600 mb-3"
+              />
+
+              <h1 className="text-xl text-stone-500 dark:text-stone-300">
+                Write
+              </h1>
               <p className="text-gray-500 dark:text-gray-300 text-md">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa
-                quod nulla recusandae,
+              Compose your thoughts and share them with the world.
               </p>
             </div>
             <div className="  flex flex-col p-3 w-[40%]">
-              <h1 className="text-lg text-stone-500 dark:text-stone-300">Express</h1>
+              <FontAwesomeIcon
+                icon={faHeart}
+                className="w-6 h-6 text-orange-500 hover:text-yellow-600 mb-3"
+              />
+              <h1 className="text-xl text-stone-500 dark:text-stone-300">
+                Express
+              </h1>
               <p className="text-gray-500 dark:text-gray-300 text-md">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem
-                accusamus aspernatur
+              Express your creativity and let your voice be heard.
+
+
               </p>
             </div>
           </div>
           <div className="  flex flex-col p-3 mt-5 w-[40%]">
-              <h1 className="text-lg text-stone-500 dark:text-stone-300">Connect</h1>
-              <p className="text-gray-500 dark:text-gray-300 text-md">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem
-                accusamus aspernatur
-              </p>
-            </div>
+            <FontAwesomeIcon
+              icon={faComment}
+              className="w-6 h-6 text-orange-500 hover:text-yellow-600 mb-3"
+            />
+
+            <h1 className="text-xl text-stone-500 dark:text-stone-300">
+              Connect
+            </h1>
+            <p className="text-gray-500 dark:text-gray-300 text-md">
+            Engage with others and share your unique perspective.
+            </p>
+          </div>
         </div>
         <div>
           <Image
