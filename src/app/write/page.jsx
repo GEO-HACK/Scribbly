@@ -1,6 +1,6 @@
 "use client";
 
-import React,{ useState} from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEditor, EditorContent } from "@tiptap/react";
@@ -25,8 +25,8 @@ const lowlight = createLowlight(common);
 const Page = () => {
   const { status } = useSession();
   const router = useRouter();
-  const [file, setFile] = useState(null);
-
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploading, setUploading] = useState(false);
 
   const editor = useEditor({
     extensions: [
@@ -54,17 +54,53 @@ const Page = () => {
     return null;
   }
 
-  // Function to handle image upload
- const handleImageUpload = async (e) => {
-  const file = e.target.files[0];
-  if(file){
-    const reader = new FileReader();
-    reader.onloadend = ()=> {
-      editor.chain().focus().setImage({src:reader.result}).run();
+  // Function to handle image upload with progress
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    setUploadProgress(0);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "/api/upload", true);
+
+      // Update progress state
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const progress = Math.round((event.loaded / event.total) * 100);
+          setUploadProgress(progress);
+        }
+      };
+
+      xhr.onload = async () => {
+        if (xhr.status === 200) {
+          const data = JSON.parse(xhr.responseText);
+          editor.chain().focus().setImage({ src: data.url }).run();
+        } else {
+          console.error("Upload failed", xhr.responseText);
+        }
+        setUploading(false);
+        setUploadProgress(0);
+      };
+
+      xhr.onerror = () => {
+        console.error("Upload failed");
+        setUploading(false);
+        setUploadProgress(0);
+      };
+
+      xhr.send(formData);
+    } catch (error) {
+      console.error("Upload failed", error);
+      setUploading(false);
     }
-    reader.readAsDataURL(file);
-  }
- };
+  };
+
   return (
     <div className="max-w-4xl mx-auto mt-6 bg-gray-100 p-6 rounded-lg shadow-md">
       {/* Title Input */}
@@ -94,7 +130,7 @@ const Page = () => {
         >
           U
         </button>
-       
+
         <button
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className="px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md border border-gray-300"
@@ -103,36 +139,45 @@ const Page = () => {
         </button>
 
         <input
-
-        type="file"
-        accept="image/*"
-        id="image"
-        onChange={handleImageUpload}
-        style={{ display: "none" }}
-        
+          type="file"
+          accept="image/*"
+          id="image"
+          onChange={handleImageUpload}
+          style={{ display: "none" }}
         />
         <button
-        onClick={() => document.getElementById('image').click()}
-        className="px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md border border-gray-300"
+          onClick={() => document.getElementById("image").click()}
+          className="px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md border border-gray-300"
         >
           Upload Image
         </button>
-      
-       
-       
 
         {/* Save Button */}
         <button
           onClick={() => console.log(editor.getHTML())}
           className="ml-auto px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md"
         >
-          save </button>
+          Save
+        </button>
       </div>
+
+      {/* Progress Bar */}
+      {uploading && (
+        <div className="mt-4 w-full bg-gray-200 rounded-md overflow-hidden">
+          <div
+            className="bg-blue-500 text-xs font-medium text-white text-center p-1 leading-none"
+            style={{ width: `${uploadProgress}%` }}
+          >
+            {uploadProgress}%
+          </div>
+        </div>
+      )}
 
       {/* Editor */}
       <div className="mt-5 bg-white min-h-[300px] border border-gray-300 rounded-md shadow-sm p-4 text-gray-800">
-        <EditorContent editor={editor} 
-        className="prose w-full min-h-[300px] focus:outline-none"
+        <EditorContent
+          editor={editor}
+          className="prose w-full min-h-[300px] focus:outline-none"
         />
       </div>
     </div>
