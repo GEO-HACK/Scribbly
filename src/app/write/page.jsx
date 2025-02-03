@@ -25,10 +25,11 @@ const Page = () => {
   const { status } = useSession();
   const router = useRouter();
   
-  // Add these state variables
+  // State for upload progress, file, dropdown visibility
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [file, setFile] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);  // New state to control dropdown visibility
 
   const editor = useEditor({
     extensions: [
@@ -140,19 +141,40 @@ const Page = () => {
           • List
         </button>
 
-        <input
-          type="file"
-          accept="image/*"
-          id="image"
-          onChange={handleImageUpload}
-          style={{ display: "none" }}
-        />
-        <button
-          onClick={() => document.getElementById("image").click()}
-          className="px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md border border-gray-300"
-        >
-          Upload Image
-        </button>
+        {/* Image Upload Dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => setDropdownOpen(!dropdownOpen)}  // Toggle dropdown visibility
+            className="px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md border border-gray-300"
+          >
+            Image Options
+          </button>
+
+          {dropdownOpen && (
+            <div className="absolute bg-white border border-gray-300 rounded-md shadow-md mt-2 w-48 z-10">
+              <input
+                type="file"
+                accept="image/*"
+                id="image"
+                onChange={handleImageUpload}
+                style={{ display: "none" }}
+              />
+              <button
+                onClick={() => document.getElementById("image").click()}
+                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-100"
+              >
+                From Pc
+              </button>
+              {/* Add Cloudinary selection option here */}
+              <button
+                onClick={() => console.log("Cloudinary Select (Implement later)")}
+                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-100"
+              >
+                browse
+              </button>
+            </div>
+          )}
+        </div>
 
         {/* Save Button */}
         <button
