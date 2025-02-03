@@ -21,13 +21,38 @@ export const GET = async (req) => {
       skip: POST_PER_PAGE * (page - 1),
     });
 
-    if (posts.length === 0) {
-      return NextResponse.json([], { status: 200 }); // Return empty array instead of an error
-    }
-
     return NextResponse.json(posts, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "Something went wrong!" }, { status: 500 });
+  }
+};
+
+// Handle POST request to create a new post
+export const POST = async (req) => {
+  try {
+    const body = await req.json();
+    console.log(body);
+    const { title, content, category, imageUrl } = body;
+
+    // Validate required fields
+    if (!title || !content || !category || !imageUrl) {
+      return NextResponse.json({ error: "All fields are required!" }, { status: 400 });
+    }
+
+    // Create new post with image
+    const newPost = await prisma.post.create({
+      data: {
+        title,
+        content,
+        catSlug: category, // Assuming category is stored as a slug
+        imageUrl, // Store image URL
+      },
+    });
+
+    return NextResponse.json(newPost, { status: 201 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: "Failed to create post!" }, { status: 500 });
   }
 };

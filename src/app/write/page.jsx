@@ -33,7 +33,11 @@ const Page = () => {
   // states for the fetching of categories from the database
   const [categories, setCategories] = useState([]);
   const [ selectedCategory, setSelectedCategory] = useState("");
-
+  //image url
+  const [imageUrl, setImageUrl] = useState("");
+  // state of the title
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -42,7 +46,6 @@ const Page = () => {
           cache: "no-cache",
         });
         const data = await res.json();
-        console.log("this is the data,", data);
         setCategories(data);
       } catch (error) {
         console.error("Failed to fetch categories", error);
@@ -52,6 +55,35 @@ const Page = () => {
   }, []);
   
 
+  const handleSave = async () => {
+    if(!title || !content || !selectedCategory || !imageUrl){
+      alert("Please fill in all fields including an image");
+      return;
+    }
+    try{
+      const res = await fetch("/api/posts",{
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          content,
+          category: selectedCategory,
+          imageUrl
+        }),
+      });
+
+      if(res.ok){
+        alert("Post created successfully");
+      }
+      else{
+        console.error("Failed to save document");
+      }
+    } catch (error) {
+      console.error("Error saving the document", error)
+    }
+  };
 
   const editor = useEditor({
     extensions: [
@@ -69,6 +101,14 @@ const Page = () => {
     ],
     content: "<p>Write something awesome...</p>",
   });
+
+  useEffect(() => {
+    if(editor){
+      editor.on("update", () => {
+        setContent(editor.getHTML());// Update content state when editor changes
+      });
+    }
+  },[editor]);
 
   if (status === "loading") {
     return <div className="text-center text-gray-500">Loading...</div>;
@@ -105,6 +145,7 @@ const Page = () => {
       xhr.onload = async () => {
         if (xhr.status === 200) {
           const data = JSON.parse(xhr.responseText);
+          setImageUrl(data.url);
           editor.chain().focus().setImage({ src: data.url }).run();
         } else {
           console.error("Upload failed", xhr.responseText);
@@ -132,6 +173,7 @@ const Page = () => {
       <input
         type="text"
         placeholder="Document Title"
+        onChange={(e) => setTitle(e.target.value)}
         className="w-full text-xl font-semibold bg-transparent border-b border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
@@ -196,12 +238,11 @@ const Page = () => {
               </button>
             </div>
           )}
-          
         </div>
 
         {/* Save Button */}
         <button
-          onClick={() => console.log(editor.getHTML())}
+          onClick={handleSave}
           className="ml-auto px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md"
         >
           save
@@ -236,18 +277,16 @@ const Page = () => {
           onChange={(e) => setSelectedCategory(e.target.value)}
           className="block w-full mt-1 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-           <option 
-           value=""
-           className="text-gray-500"
-           
-           >Select a category</option>
+          <option 
+            value=""
+            className="text-gray-500"
+          >Select a category</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id} className="text-gray-800 hover:bg-blue-100">
               {category.title}
             </option>
           ))}
         </select>
-
       </div>
     </div>
   );
