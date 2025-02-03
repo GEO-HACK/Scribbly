@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import Image from "@tiptap/extension-image";
 import Bold from "@tiptap/extension-bold";
 import Italic from "@tiptap/extension-italic";
 import Underline from "@tiptap/extension-underline";
@@ -25,8 +24,11 @@ const lowlight = createLowlight(common);
 const Page = () => {
   const { status } = useSession();
   const router = useRouter();
-  const [uploadProgress, setUploadProgress] = useState(0);
+  
+  // Add these state variables
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [file, setFile] = useState(null);
 
   const editor = useEditor({
     extensions: [
@@ -54,7 +56,7 @@ const Page = () => {
     return null;
   }
 
-  // Function to handle image upload with progress
+  // Function to handle image upload
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -157,7 +159,7 @@ const Page = () => {
           onClick={() => console.log(editor.getHTML())}
           className="ml-auto px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md"
         >
-          Save
+          save
         </button>
       </div>
 
@@ -175,10 +177,7 @@ const Page = () => {
 
       {/* Editor */}
       <div className="mt-5 bg-white min-h-[300px] border border-gray-300 rounded-md shadow-sm p-4 text-gray-800">
-        <EditorContent
-          editor={editor}
-          className="prose w-full min-h-[300px] focus:outline-none"
-        />
+        <EditorContent editor={editor} className="prose w-full min-h-[300px] focus:outline-none" />
       </div>
     </div>
   );
