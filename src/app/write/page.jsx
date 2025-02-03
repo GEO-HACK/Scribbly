@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEditor, EditorContent } from "@tiptap/react";
@@ -30,6 +30,28 @@ const Page = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [file, setFile] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);  // New state to control dropdown visibility
+  // states for the fetching of categories from the database
+  const [categories, setCategories] = useState([]);
+  const [ selectedCategory, setSelectedCategory] = useState("");
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch(`/api/categories`, {
+          cache: "no-cache",
+        });
+        const data = await res.json();
+        console.log("this is the data,", data);
+        setCategories(data);
+      } catch (error) {
+        console.error("Failed to fetch categories", error);
+      }
+    };
+    fetchCategories();  
+  }, []);
+  
+
 
   const editor = useEditor({
     extensions: [
@@ -174,6 +196,7 @@ const Page = () => {
               </button>
             </div>
           )}
+          
         </div>
 
         {/* Save Button */}
@@ -200,6 +223,31 @@ const Page = () => {
       {/* Editor */}
       <div className="mt-5 bg-white min-h-[300px] border border-gray-300 rounded-md shadow-sm p-4 text-gray-800">
         <EditorContent editor={editor} className="prose w-full min-h-[300px] focus:outline-none" />
+      </div>
+
+      {/* Category Dropdown */}
+      <div className="mt-4">
+        <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+          Category
+        </label>
+        <select
+          id="category"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="block w-full mt-1 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+           <option 
+           value=""
+           className="text-gray-500"
+           
+           >Select a category</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id} className="text-gray-800 hover:bg-blue-100">
+              {category.title}
+            </option>
+          ))}
+        </select>
+
       </div>
     </div>
   );
