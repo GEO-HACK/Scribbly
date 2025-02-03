@@ -14,6 +14,7 @@ import BulletList from "@tiptap/extension-bullet-list";
 import OrderedList from "@tiptap/extension-ordered-list";
 import ListItem from "@tiptap/extension-list-item";
 import Blockquote from "@tiptap/extension-blockquote";
+import slugify from "slugify";
 import { common, createLowlight } from "lowlight";
 import ResizableImageExtension from "@/components/resizableImageExtension/ResizableImageExtension";
 import "highlight.js/styles/github-dark.css";
@@ -22,6 +23,7 @@ import "highlight.js/styles/github-dark.css";
 const lowlight = createLowlight(common);
 
 const Page = () => {
+  const  {data: session} = useSession();
   const { status } = useSession();
   const router = useRouter();
   
@@ -37,7 +39,7 @@ const Page = () => {
   const [imageUrl, setImageUrl] = useState("");
   // state of the title
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [desc, setDesc] = useState("");
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -56,10 +58,32 @@ const Page = () => {
   
 
   const handleSave = async () => {
-    if(!title || !content || !selectedCategory || !imageUrl){
+
+
+    
+    if(!title || !desc || !selectedCategory || !imageUrl){
       alert("Please fill in all fields including an image");
       return;
+      
+      
     }
+    
+    //generate the slug for the title
+    const slug = slugify(title, { lower: true , strict:true});
+
+    // get the user from session
+
+    if(!session){
+      alert("You need to be logged in to create a post");
+      return;
+    }
+
+    const userEmail = session.user.email; //get the email from session
+
+    console.log("this is the user email", userEmail);
+
+
+
     try{
       const res = await fetch("/api/posts",{
         method: "POST",
@@ -68,9 +92,11 @@ const Page = () => {
         },
         body: JSON.stringify({
           title,
-          content,
+          desc,
           category: selectedCategory,
-          imageUrl
+          imageUrl,
+          slug,
+          userEmail
         }),
       });
 
@@ -105,7 +131,7 @@ const Page = () => {
   useEffect(() => {
     if(editor){
       editor.on("update", () => {
-        setContent(editor.getHTML());// Update content state when editor changes
+        setDesc(editor.getHTML());// Update content state when editor changes
       });
     }
   },[editor]);
@@ -282,7 +308,7 @@ const Page = () => {
             className="text-gray-500"
           >Select a category</option>
           {categories.map((category) => (
-            <option key={category.id} value={category.id} className="text-gray-800 hover:bg-blue-100">
+            <option key={category.id} value={category.slug} className="text-gray-800 hover:bg-blue-100">
               {category.title}
             </option>
           ))}

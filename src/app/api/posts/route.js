@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../utils/connect";
+import { useReducedMotion } from "framer-motion";
 
 export const GET = async (req) => {
   try {
@@ -32,23 +33,31 @@ export const GET = async (req) => {
 export const POST = async (req) => {
   try {
     const body = await req.json();
-    console.log(body);
-    const { title, content, category, imageUrl } = body;
+    console.log("this is the body",body);
+    const { title, desc, category, imageUrl ,slug, userEmail} = body;
 
     // Validate required fields
-    if (!title || !content || !category || !imageUrl) {
+    if (!title || !desc || !category || !imageUrl || !slug || !userEmail) {
       return NextResponse.json({ error: "All fields are required!" }, { status: 400 });
     }
 
     // Create new post with image
+    console.log("this is the progress posting");
     const newPost = await prisma.post.create({
       data: {
         title,
-        content,
+        desc,
         catSlug: category, // Assuming category is stored as a slug
         imageUrl, // Store image URL
+        slug,
+        userEmail,
       },
     });
+
+
+
+    console.log("post was created",newPost);
+    
 
     return NextResponse.json(newPost, { status: 201 });
   } catch (error) {
