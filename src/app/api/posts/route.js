@@ -35,7 +35,7 @@ export const POST = async (req) => {
 
     const body = await req.json();
     console.log("this is the body",body);
-    const { title, desc, catSlug, img ,slug, userEmail,views} = body;
+    const { title, desc, catSlug, img ,slug, userEmail,} = body;
 
     // Validate required fields
     if (!title || !desc || !catSlug || !img || !slug || !userEmail) {
