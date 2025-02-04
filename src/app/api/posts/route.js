@@ -32,25 +32,26 @@ export const GET = async (req) => {
 // Handle POST request to create a new post
 export const POST = async (req) => {
   try {
+
     const body = await req.json();
     console.log("this is the body",body);
-    const { title, desc, category, imageUrl ,slug, userEmail} = body;
+    const { title, desc, catSlug, img ,slug, userEmail,views} = body;
 
     // Validate required fields
-    if (!title || !desc || !category || !imageUrl || !slug || !userEmail) {
+    if (!title || !desc || !catSlug || !img || !slug || !userEmail) {
       return NextResponse.json({ error: "All fields are required!" }, { status: 400 });
     }
 
     // Create new post with image
-    console.log("this is the progress posting");
     const newPost = await prisma.post.create({
       data: {
         title,
         desc,
-        catSlug: category, // Assuming category is stored as a slug
-        imageUrl, // Store image URL
+        catSlug: catSlug, // Assuming category is stored as a slug
+        img, // Store image URL
         slug,
         userEmail,
+        views: 0,
       },
     });
 

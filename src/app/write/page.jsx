@@ -36,7 +36,7 @@ const Page = () => {
   const [categories, setCategories] = useState([]);
   const [ selectedCategory, setSelectedCategory] = useState("");
   //image url
-  const [imageUrl, setImageUrl] = useState("");
+  const [img, setImg] = useState("");
   // state of the title
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -61,7 +61,7 @@ const Page = () => {
 
 
     
-    if(!title || !desc || !selectedCategory || !imageUrl){
+    if(!title || !desc || !selectedCategory || !img){
       alert("Please fill in all fields including an image");
       return;
       
@@ -93,10 +93,11 @@ const Page = () => {
         body: JSON.stringify({
           title,
           desc,
-          category: selectedCategory,
-          imageUrl,
+          catSlug: selectedCategory,
+          img,
           slug,
-          userEmail
+          userEmail,
+          views: 0,
         }),
       });
 
@@ -171,7 +172,7 @@ const Page = () => {
       xhr.onload = async () => {
         if (xhr.status === 200) {
           const data = JSON.parse(xhr.responseText);
-          setImageUrl(data.url);
+          setImg(data.url);
           editor.chain().focus().setImage({ src: data.url }).run();
         } else {
           console.error("Upload failed", xhr.responseText);
