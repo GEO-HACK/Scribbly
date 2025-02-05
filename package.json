@@ -29,6 +29,7 @@
     "@tiptap/react": "^2.11.5",
     "@tiptap/starter-kit": "^2.11.5",
     "cloudinary": "^2.5.1",
+    "dompurify": "^3.2.4",
     "dotenv": "^16.4.7",
     "firebase": "^11.2.0",
     "framer-motion": "^11.18.1",
