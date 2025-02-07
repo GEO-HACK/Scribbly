@@ -28,7 +28,7 @@ const AuthLinks = () => {
             </span>
             {dropdownOpen && (
               <div
-                className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-lg p-2"
+                className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-lg p-2 z-50"
                 onClick={() => setDropdownOpen(false)} //closing when the div is clicked
               >
                 <Link
