@@ -45,6 +45,8 @@ const Navbar = () => {
           <Link
             key={index}
             href={path}
+            prefetch={true}
+            
             className={`relative px-3 py-1 font-semibold transition-colors ${
               theme === "dark"
                 ? "text-gray-200 hover:text-blue-400"
@@ -85,6 +87,7 @@ const Navbar = () => {
               <Link
                 key={index}
                 href={path}
+                prefetch={true}
                 onClick={closeMenu}
                 className="text-lg font-semibold py-2 border-b dark:border-gray-600 hover:text-blue-500 transition-colors"
               >

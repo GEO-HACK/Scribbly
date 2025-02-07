@@ -12,11 +12,11 @@ const AuthLinks = () => {
     <>
       {status === "unauthenticated" ? (
         <>
-          <Link href="/login">login</Link>
+          <Link href="/login" prefetch={true}>login</Link>
         </>
       ) : (
         <>
-          <Link href="/write">write</Link>
+          <Link href="/write" prefetch={true}>write</Link>
 
           <div className="relative">
             {/* profile icon */}
@@ -33,6 +33,7 @@ const AuthLinks = () => {
               >
                 <Link
                   href="/profile"
+                  prefetch={true}
                   className="block px-4 py-2 hover:bg-gray-100"
                 >
                   Profile
