@@ -89,7 +89,7 @@ const Navbar = () => {
                 href={path}
                 prefetch={true}
                 onClick={closeMenu}
-                className="text-lg font-semibold py-2 border-b dark:border-gray-600 hover:text-blue-500 transition-colors"
+                className="text-sm py-2 border-b dark:border-gray-600 hover:text-blue-500 transition-colors"
               >
                 {path === "/" ? "Home" : path.replace("/", "").charAt(0).toUpperCase() + path.slice(2)}
               </Link>
