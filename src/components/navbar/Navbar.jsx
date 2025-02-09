@@ -22,18 +22,18 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between items-center h-[80px] px-6 md:px-10 border-b border-gray-200 dark:border-gray-700">
-      {/* Social Media Icons */}
+      
       <div className="hidden sm:flex items-center gap-3">
       <h1 className="text-3xl font-bold text-center">Scribbly</h1>
     
       </div>
 
-      {/* Brand Name */}
+      
      
 
       {/* Desktop Navigation + Theme Toggle */}
       <div className="hidden sm:flex items-center gap-6">
-        {["/", "/contact", "/about"].map((path, index) => (
+        {["/","/posts", "/contact", "/about"].map((path, index) => (
           <Link
             key={index}
             href={path}
