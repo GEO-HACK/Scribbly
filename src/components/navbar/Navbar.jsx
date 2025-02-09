@@ -24,20 +24,12 @@ const Navbar = () => {
     <div className="flex justify-between items-center h-[80px] px-6 md:px-10 border-b border-gray-200 dark:border-gray-700">
       {/* Social Media Icons */}
       <div className="hidden sm:flex items-center gap-3">
-        {["facebook", "instagram", "tiktok", "youtube"].map((platform) => (
-          <Image
-            key={platform}
-            src={`/${platform}.png`}
-            alt={`${platform} logo`}
-            width={24}
-            height={24}
-            className="hover:scale-110 transition-transform"
-          />
-        ))}
+      <h1 className="text-3xl font-bold text-center">Scribbly</h1>
+    
       </div>
 
       {/* Brand Name */}
-      <h1 className="text-3xl font-bold text-center">Scribbly</h1>
+     
 
       {/* Desktop Navigation + Theme Toggle */}
       <div className="hidden sm:flex items-center gap-6">
@@ -47,7 +39,7 @@ const Navbar = () => {
             href={path}
             prefetch={true}
             
-            className={`relative px-3 py-1 font-semibold transition-colors ${
+            className={`text-sm relative px-3 py-1  transition-colors ${
               theme === "dark"
                 ? "text-gray-200 hover:text-blue-400"
                 : "text-gray-800 hover:text-blue-600"
