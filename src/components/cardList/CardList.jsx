@@ -21,9 +21,7 @@ const CardList = ({ cat, }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const query = all 
-        ? `/api/posts?all=true${cat ? `&cat=${cat}` : ""}`
-        : `/api/posts?page=${page}${cat ? `&cat=${cat}` : ""}`; 
+        const query =`/api/posts?page=${page}${cat ? `&cat=${cat}` : ""}`; 
 
         const res = await fetch(query, { cache: "no-cache" });
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
