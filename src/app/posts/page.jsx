@@ -4,7 +4,7 @@ const page = () => {
   return (
     <div className='flex flex-row items-center justify-center'>
     
-        <CardList />
+        <CardList all={true} />
         
 
     </div>

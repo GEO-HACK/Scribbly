@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Card from "../card/Card";
 import Pagination from "../pagination/Pagination";
+import { all } from "lowlight";
 
-const CardList = ({ cat }) => {
+const CardList = ({ cat, }) => {
   const [data, setData] = useState([]);
   const searchParams = useSearchParams();
   const [page, setPage] = useState(1);
@@ -20,7 +21,10 @@ const CardList = ({ cat }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const query = `/api/posts?page=${page}${cat ? `&cat=${cat}` : ""}`;
+        const query = all 
+        ? `/api/posts?all=true${cat ? `&cat=${cat}` : ""}`
+        : `/api/posts?page=${page}${cat ? `&cat=${cat}` : ""}`; 
+
         const res = await fetch(query, { cache: "no-cache" });
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const json = await res.json();
@@ -35,12 +39,12 @@ const CardList = ({ cat }) => {
     };
 
     fetchData();
-  }, [page, cat]);
+  }, [page, cat, all]);
 
   useEffect(() => {
     const currentPath = window.location.pathname;
     router.push(`${currentPath}?page=${page}${cat ? `&cat=${cat}` : ""}`);
-  }, [page, cat]);
+  }, [page, cat, all]);
 
   return (
     <div className="max-w-[70%]">

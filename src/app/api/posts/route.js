@@ -7,6 +7,7 @@ export const GET = async (req) => {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page")) || 1;
     const category = searchParams.get("cat") || null;
+    const fetchAll = searchParams.get("all") === "true";
     const POST_PER_PAGE = 2;
 
     // Create a filter object
@@ -18,8 +19,8 @@ export const GET = async (req) => {
     // Fetch posts with pagination
     const posts = await prisma.post.findMany({
       where: filter,
-      take: POST_PER_PAGE,
-      skip: POST_PER_PAGE * (page - 1),
+      take: fetchAll ? undefined : POST_PER_PAGE,
+      skip: fetchAll ? undefined : (page - 1) * POST_PER_PAGE,
     });
 
     return NextResponse.json(posts, { status: 200 });
