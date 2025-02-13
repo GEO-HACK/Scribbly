@@ -13,7 +13,7 @@ const Card = ({ item }) => {
   const description = stringHtmlTags(item.desc);
   return (
     <div className="flex gap-[50px] mb-[50px] items-center">
-      <div className="flex-1 relative w-auto h-[350px] hidden lg:block">
+      <div className="flex-1 relative w-auto h-[250px] hidden lg:block">
         {item.img && (
           <Image
             src={item.img || "/placeholder.jpg"}
@@ -37,11 +37,18 @@ const Card = ({ item }) => {
         </div>
         <Link href={`/posts/${item.slug}`} >
           <h1 className="font-bold text-xl">{item.title}</h1>
+
+        
         </Link>
         <p className="font-[18px] font-md text-gray">{description.substring(0,80)}</p>
+
+        <div className="flex flex-row justify-between items-center">
+
         <Link href={`/posts/${item.slug}`} className="border-b border-red-500 max-w-max pt-2 pb-1">
           ReadMore
         </Link>
+        <p>this is the page</p>
+        </div>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Card from "../../components/card/Card";
 import Pagination from "../../components/pagination/Pagination";
+import CategoryList from "@/components/categoryList/CategoryList";
 
 const Page = ({ cat, all }) => {
   const [data, setData] = useState([]);

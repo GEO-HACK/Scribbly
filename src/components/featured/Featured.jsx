@@ -22,7 +22,7 @@ const Featured = () => {
 
         {/* Text Section */}
         <div className="flex-1 flex flex-col gap-4 items-start justify-center">
-          <h1 className="text-2xl lg:text-3xl font-semibold text-center lg:text-left">
+          <h1 className="text-lg lg:text-2xl font-semibold text-center lg:text-left">
             Capture your thoughts, shape your ideas and share your stories
           </h1>
           <p className="text-sm lg:text-md font-light text-gray-500 text-center lg:text-left">
