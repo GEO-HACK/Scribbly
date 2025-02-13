@@ -25,6 +25,7 @@ const singlePage = async ({ params }) => {
 
   const { slug } = params;
   const data = await fetchData(params.slug);
+  
   return (
     <div>
       <div className="flex flex-wrap items-center gap-[30px] md:gap-[50px]">

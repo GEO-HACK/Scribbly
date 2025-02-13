@@ -26,12 +26,15 @@ const CardList = ({ cat, }) => {
         const res = await fetch(query, { cache: "no-cache" });
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const json = await res.json();
+
+        // console.log(json)
         
         setData(json);
         setHasNext(json.length > 0);
       } catch (error) {
         console.error("Error fetching posts:", error.message);
         setData([]);
+        
         setHasNext(false);
       }
     };
@@ -50,6 +53,7 @@ const CardList = ({ cat, }) => {
       <div className="flex flex-col">
         {data.length > 0 ? (
           data.map((item) => <Card key={item.id} item={item} />)
+          
         ) : (
           <p>No posts available.</p>
         )}

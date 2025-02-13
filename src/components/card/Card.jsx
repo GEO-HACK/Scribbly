@@ -2,8 +2,11 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import DOMPurify from "dompurify"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComment } from "@fortawesome/free-solid-svg-icons";
 
 const Card = ({ item }) => {
+  console.log(item);
 
 
   function stringHtmlTags(html){
@@ -42,12 +45,25 @@ const Card = ({ item }) => {
         </Link>
         <p className="font-[18px] font-md text-gray">{description.substring(0,80)}</p>
 
-        <div className="flex flex-row justify-between items-center">
+        <div className="flex flex-row justify-between items-center align-baseline">
+          <div>
+          <Image  
+            src={item.user.image || "/placeholder.jpg"}
+            alt="this is the user image"
+            width={20}
+            height={20}
+            className="w-10 h-10 rounded-full"
+          />
+          <span className="font-semibold text-[8px]">{item.user.name}</span>
+          </div>
 
-        <Link href={`/posts/${item.slug}`} className="border-b border-red-500 max-w-max pt-2 pb-1">
-          ReadMore
-        </Link>
-        <p>this is the page</p>
+          <div>
+            <FontAwesomeIcon icon={faComment} />
+            <span className="text-gray-400 font-semibold">{item._count.comments}</span>
+          </div>
+
+        
+     
         </div>
       </div>
     </div>
