@@ -15,7 +15,8 @@ const Card = ({ item }) => {
 
   const description = stringHtmlTags(item.desc);
   return (
-    <div className="flex gap-[50px] mb-[50px] items-center">
+    <Link href={`/posts/${item.slug}`}>
+       <div className="flex gap-[50px] mb-[50px] items-center">
       <div className="flex-1 relative w-auto h-[250px] hidden lg:block">
         {item.img && (
           <Image
@@ -67,6 +68,8 @@ const Card = ({ item }) => {
         </div>
       </div>
     </div>
+    </Link>
+   
   );
 };
 

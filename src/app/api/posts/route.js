@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../utils/connect";
+import { getAuthSession } from "@/utils/auth";
 
 export const GET = async (req) => {
   try {
@@ -44,13 +45,28 @@ export const GET = async (req) => {
 // Handle POST request to create a new post
 export const POST = async (req) => {
   try {
+    // 🚀 Get user sessio
+    //n
+    const session = await getAuthSession();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized!" }, { status: 401 });
+    }
+    const userEmail = session.user.email;
     const body = await req.json();
     console.log("this is the body", body);
-    const { title, desc, catSlug, img, slug, userEmail } = body;
+    const { title, desc, catSlug, img, slug} = body;
 
     // Validate required fields
-    if (!title || !desc || !catSlug || !img || !slug || !userEmail) {
+    if (!title || !desc || !catSlug || !img || !slug) {
       return NextResponse.json({ error: "All fields are required!" }, { status: 400 });
+    }
+
+    const existingUser= await prisma.user.findUnique({
+      where: { email: userEmail },
+    });
+
+    if (!existingUser) {
+      return NextResponse.json({ error: "User not found!" }, { status: 404 });
     }
 
     // 🚀 Create new post with user relation
