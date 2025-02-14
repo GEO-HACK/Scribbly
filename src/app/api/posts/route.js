@@ -45,28 +45,40 @@ export const GET = async (req) => {
 // Handle POST request to create a new post
 export const POST = async (req) => {
   try {
-    // 🚀 Get user sessio
-    //n
+    // 🚀 Get user session
     const session = await getAuthSession();
     if (!session) {
       return NextResponse.json({ error: "Unauthorized!" }, { status: 401 });
     }
     const userEmail = session.user.email;
     const body = await req.json();
-    console.log("this is the body", body);
-    const { title, desc, catSlug, img, slug} = body;
+    console.log("Received body:", body);
+
+    const { title, desc, catSlug, img, slug } = body;
 
     // Validate required fields
     if (!title || !desc || !catSlug || !img || !slug) {
       return NextResponse.json({ error: "All fields are required!" }, { status: 400 });
     }
 
-    const existingUser= await prisma.user.findUnique({
+    // ✅ Log existing user
+    const existingUser = await prisma.user.findUnique({
       where: { email: userEmail },
     });
+    console.log("Existing User:", existingUser);
 
     if (!existingUser) {
-      return NextResponse.json({ error: "User not found!" }, { status: 404 });
+      return NextResponse.json({ error: "User does not exist!" }, { status: 404 });
+    }
+
+    // ✅ Log category
+    const category = await prisma.category.findUnique({
+      where: { slug: catSlug },
+    });
+    console.log("Category:", category);
+
+    if (!category) {
+      return NextResponse.json({ error: "Category does not exist!" }, { status: 400 });
     }
 
     // 🚀 Create new post with user relation
@@ -79,17 +91,16 @@ export const POST = async (req) => {
         slug,
         userEmail,
         views: 0,
-        user: {  // ✅ Added: Link post to user via email
-          connect: { email: userEmail },
-        },
+        user: { connect: { email: userEmail } },
       },
     });
 
-    console.log("Post was created", newPost);
+    console.log("Post was created:", newPost);
 
     return NextResponse.json(newPost, { status: 201 });
   } catch (error) {
-    console.error(error);
+    console.error("Error creating post:", error);
     return NextResponse.json({ error: "Failed to create post!" }, { status: 500 });
   }
 };
+
