@@ -33,7 +33,7 @@ const Navbar = () => {
 
       {/* Desktop Navigation + Theme Toggle */}
       <div className="hidden sm:flex items-center gap-6">
-        {["/","/posts", "/contact", "/about"].map((path, index) => (
+        {["/","/posts", "/contact"].map((path, index) => (
           <Link
             key={index}
             href={path}
