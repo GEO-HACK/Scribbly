@@ -14,9 +14,14 @@ const BlogPage = ({ searchParams }) => {
       </h1>
 
       <div className='flex gap-[50px] mt-6'>
+
+        <suspense fallback={<div>Loading...</div>}>
         {/* Pass page and category as props to CardList */}
         <CardList page={page} cat={cat} />
+        </suspense>
+        <suspense fallback={<div>Loading menu...</div>}>
         <Menu />
+        </suspense>
       </div>
     </div>
   );
