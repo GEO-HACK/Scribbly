@@ -1,4 +1,6 @@
-import { suspense } from "react";
+
+
+import { Suspense } from "react";
 import Featured from "@/components/featured/Featured";
 import CategoryList from "@/components/categoryList/CategoryList";
 import CardList from "@/components/cardList/CardList";
@@ -13,12 +15,12 @@ const Page = ({ searchParams }) => {
       <Featured />
       <CategoryList />
       <div className="flex gap-[50px] mt-6">
-        <suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>Loading...</div>}>
           <CardList page={page} cat={cat} />
-        </suspense>
-        <suspense fallback={<div>Loading menu...</div>}>
+        </Suspense>
+        <Suspense fallback={<div>Loading menu...</div>}>
           <Menu />
-        </suspense>
+        </Suspense>
       </div>
     </div>
   );
