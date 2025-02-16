@@ -18,9 +18,10 @@ const Footer = () => {
           <h1 className="text-xl font-semibold">Scribbly</h1>
         </div>
         <p className="text-[12px]">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus
-          delectus, odit aliquid recusandae nemo accusantium sint aut, facilis
-          itaque quos culpa tenetur ab officia placeat ea ex quam? Eligendi, et?
+          Scribbly is a space for creativity, ideas, and stories. Whether you're
+          sharing thoughts, documenting experiences, or exploring new
+          perspectives, Scribbly makes it simple and engaging. Write, express,
+          and connect—one post at a time."
         </p>
         <div className="flex gap-4">
           <Image
@@ -59,28 +60,50 @@ const Footer = () => {
         {/* Links Column */}
         <div className="flex flex-col gap-2">
           <h1 className="font-bold text-md">Links</h1>
-          <Link href="/" className="text-gray-500 text-[14px]">HomePage</Link>
-          <Link href="/blog" className="text-gray-500 text-[14px]">Blog</Link>
-          <Link href="/about" className="text-gray-500 text-[14px]">About</Link>
-          <Link href="/contact" className="text-gray-500 text-[14px]">Contact</Link>
+          <Link href="/" className="text-gray-500 text-[14px]">
+            HomePage
+          </Link>
+          <Link href="/blog" className="text-gray-500 text-[14px]">
+            Blog
+          </Link>
+       
+          <Link href="/contact" className="text-gray-500 text-[14px]">
+            Contact
+          </Link>
         </div>
 
         {/* Tags Column */}
         <div className="flex flex-col gap-2">
           <h1 className="font-bold text-md">Tags</h1>
-          <Link href="/" className="text-gray-500 text-[14px]">Style</Link>
-          <Link href="/blog" className="text-gray-500 text-[14px]">Fashion</Link>
-          <Link href="/about" className="text-gray-500 text-[14px]">Coding</Link>
-          <Link href="/contact" className="text-gray-500 text-[14px]">Travel</Link>
+          <Link href={`/blog?cat=style`} className="text-gray-500 text-[14px]">
+            Style
+          </Link>
+          <Link href={`/blog?cat=fashion`} className="text-gray-500 text-[14px]">
+            Fashion
+          </Link>
+          <Link href={`/blog?cat=coding`} className="text-gray-500 text-[14px]">
+            Coding
+          </Link>
+          <Link href={`/blog?cat=travel`} className="text-gray-500 text-[14px]">
+            Travel
+          </Link>
         </div>
 
         {/* Social Column */}
         <div className="flex flex-col gap-2">
           <h1 className="font-bold text-md">Social</h1>
-          <Link href="/" className="text-gray-500 text-[14px]">Facebook</Link>
-          <Link href="/" className="text-gray-500 text-[14px]">Instagram</Link>
-          <Link href="/" className="text-gray-500 text-[14px]">TikTok</Link>
-          <Link href="/" className="text-gray-500 text-[14px]">YouTube</Link>
+          <Link href="/" className="text-gray-500 text-[14px]">
+            Facebook
+          </Link>
+          <Link href="/" className="text-gray-500 text-[14px]">
+            Instagram
+          </Link>
+          <Link href="/" className="text-gray-500 text-[14px]">
+            TikTok
+          </Link>
+          <Link href="/" className="text-gray-500 text-[14px]">
+            YouTube
+          </Link>
         </div>
       </div>
     </div>

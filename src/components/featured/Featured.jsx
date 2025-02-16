@@ -33,9 +33,9 @@ const Featured = () => {
           </p>
 
           <div className="flex justify-center lg:justify-start w-full">
-          <Link href="/about">
+          <Link href="/posts">
           <button className="px-6 py-2 text-white rounded-md bg-gray-800 hover:bg-gray-700 transition duration-300">
-              Read More
+            Explore 
             </button>
           </Link>
           </div>

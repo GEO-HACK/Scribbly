@@ -29,7 +29,7 @@ const MenuPosts = ({ withImage }) => {
     <div className="flex flex-col gap-3 mt-5 mb-4">
       {posts.length > 0 ? (
         posts.map((post) => (
-          <Link href={`/post/${post.slug}`} key={post.id}>
+          <Link href={`/posts/${post.slug}`} key={post.id}>
             <div className={`flex ${withImage ? "gap-3 items-center" : "flex-col"} w-full`}>
               {withImage && (
                 <div className="max-w-[30%] relative w-10 h-10 border rounded-full border-gray-400">
