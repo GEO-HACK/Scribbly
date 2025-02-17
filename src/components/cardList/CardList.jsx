@@ -4,48 +4,44 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Card from "../card/Card";
 import Pagination from "../pagination/Pagination";
-import { all } from "lowlight";
 
-const CardList = ({ cat, }) => {
+const CardList = () => {
   const [data, setData] = useState([]);
   const searchParams = useSearchParams();
-  const [page, setPage] = useState(1);
-  const [hasNext, setHasNext] = useState(true);
   const router = useRouter();
 
-  useEffect(() => {
-    const pageFromParams = parseInt(searchParams.get("page")) || 1;
-    setPage(pageFromParams);
-  }, [searchParams]);
+  // Extract page and cat from URL parameters
+  const page = parseInt(searchParams.get("page") || "1", 10);
+  const cat = searchParams.get("cat") || null;
+
+  const [hasNext, setHasNext] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const query =`/api/posts?page=${page}${cat ? `&cat=${cat}` : ""}`; 
-
+        const query = `/api/posts?page=${page}${cat ? `&cat=${cat}` : ""}`;
         const res = await fetch(query, { cache: "no-cache" });
+
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const json = await res.json();
 
-        // console.log(json)
-        
         setData(json);
         setHasNext(json.length > 0);
       } catch (error) {
         console.error("Error fetching posts:", error.message);
         setData([]);
-        
         setHasNext(false);
       }
     };
 
     fetchData();
-  }, [page, cat, all]);
+  }, [page, cat]);
 
+  // Update URL when page or cat changes
   useEffect(() => {
     const currentPath = window.location.pathname;
     router.push(`${currentPath}?page=${page}${cat ? `&cat=${cat}` : ""}`);
-  }, [page, cat, all]);
+  }, [page, cat]);
 
   return (
     <div className="max-w-[70%]">
@@ -53,12 +49,11 @@ const CardList = ({ cat, }) => {
       <div className="flex flex-col">
         {data.length > 0 ? (
           data.map((item) => <Card key={item.id} item={item} />)
-          
         ) : (
           <p>No posts available.</p>
         )}
       </div>
-      <Pagination page={page} setPage={setPage} hasNext={hasNext} />
+      <Pagination page={page} hasNext={hasNext} />
     </div>
   );
 };
