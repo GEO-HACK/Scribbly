@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Card from "../../components/card/Card";
 import Pagination from "../../components/pagination/Pagination";
 import CategoryList from "@/components/categoryList/CategoryList";
 
-const Page = ({ cat, all }) => {
+const PageContent = ({ cat, all }) => {
   const [data, setData] = useState([]);
   const searchParams = useSearchParams();
   const [page, setPage] = useState(1);
@@ -25,8 +25,6 @@ const Page = ({ cat, all }) => {
     const fetchData = async () => {
       try {
         const query = `/api/posts?all=true${cat ? `&cat=${cat}` : ""}` // Fetch all posts
-        
-
         const res = await fetch(query, { cache: "no-cache" });
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const json = await res.json();
@@ -63,6 +61,14 @@ const Page = ({ cat, all }) => {
       </div>
       {!all && <Pagination page={page} setPage={setPage} hasNext={hasNext} />}
     </div>
+  );
+};
+
+const Page = ({ cat, all }) => {
+  return (
+    <Suspense fallback={<div>Loading posts...</div>}>
+      <PageContent cat={cat} all={all} />
+    </Suspense>
   );
 };
 
