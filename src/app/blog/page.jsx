@@ -1,6 +1,7 @@
 import CardList from '@/components/cardList/CardList'
 import Menu from '@/components/menu/Menu'
 import React from 'react'
+import { Suspense } from 'react'
 
 const BlogPage = () => {
 
@@ -14,7 +15,10 @@ const BlogPage = () => {
       <div className='flex gap-[50px] mt-6'>
         
         {/* Pass page and category as props to CardList */}
-        <CardList  />
+        <Suspense fallback={<div>Loading...</div>}>
+          <CardList/>
+        </Suspense>
+        
         <Menu />
       </div>
     </div>
