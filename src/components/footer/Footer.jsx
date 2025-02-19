@@ -1,8 +1,28 @@
-import React from "react";
+"use client"
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 const Footer = () => {
+  const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+      const fetchCategories = async () => {
+        try {
+          const res = await fetch(`/api/categories`, {
+            cache: "no-cache",
+          });
+          const data = await res.json();
+          setCategories(data);
+        } catch (error) {
+          console.error("Failed to fetch categories", error);
+        }
+      };
+      fetchCategories();  
+    }, []);
+    console.log(categories);
+    
   return (
     <div className="flex lg:flex-row flex-col gap-10 lg:gap-[100px] mt-16 mb-5 px-5">
       {/* Logo and Description Section */}
@@ -75,18 +95,20 @@ const Footer = () => {
         {/* Tags Column */}
         <div className="flex flex-col gap-2">
           <h1 className="font-bold text-md">Tags</h1>
-          <Link href={`/blog?cat=style`} className="text-gray-500 text-[14px]">
+          {categories.map((category) => (
+            <Link
+              key={category.id}
+              href={`/blog?cat=${category.slug}`}
+              className="text-gray-500 text-[14px]"
+            >
+              {category.slug}
+            </Link>
+          ))}
+           <Link href={`/blog?cat=style`} className="text-gray-500 text-[14px]">
             Style
           </Link>
-          <Link href={`/blog?cat=fashion`} className="text-gray-500 text-[14px]">
-            Fashion
-          </Link>
-          <Link href={`/blog?cat=coding`} className="text-gray-500 text-[14px]">
-            Coding
-          </Link>
-          <Link href={`/blog?cat=travel`} className="text-gray-500 text-[14px]">
-            Travel
-          </Link>
+         
+         
         </div>
 
         {/* Social Column */}
