@@ -23,7 +23,7 @@ const Navbar = () => {
     <div className="navbar flex justify-between items-center h-[80px] px-6 md:px-10 border-b border-gray-300 dark:border-gray-700">
       {/* Logo */}
       <div className="hidden sm:flex items-center gap-3">
-        <h1 className="text-3xl font-bold">Scribbly</h1>
+        <h1 className="text-3xl font-bold"><span className="text-red-500">FLOW</span>NOTE</h1>
       </div>
 
       {/* Desktop Navigation */}

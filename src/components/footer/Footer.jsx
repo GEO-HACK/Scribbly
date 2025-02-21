@@ -35,10 +35,10 @@ const Footer = () => {
             height={30}
             className="w-12 h-12 rounded-full"
           />
-          <h1 className="text-xl font-semibold">Scribbly</h1>
+          <h1 className="text-xl font-semibold"> <span className="text-red-500">FLOW</span>NOTE</h1>
         </div>
         <p className="text-[12px]">
-          Scribbly is a space for creativity, ideas, and stories. Whether you're
+        <span className="text-red-500">Flow</span>note is a space for creativity, ideas, and stories. Whether you're
           sharing thoughts, documenting experiences, or exploring new
           perspectives, Scribbly makes it simple and engaging. Write, express,
           and connect—one post at a time."

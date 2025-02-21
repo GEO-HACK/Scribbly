@@ -26,7 +26,7 @@ const Featured = () => {
             Capture your thoughts, shape your ideas and share your stories
           </h1>
           <p className="text-sm lg:text-md font-light text-gray-500 text-center lg:text-left">
-            Scribbly is your space to write , create and share your stories with
+            <span className="text-red-500">Flow</span>note is your space to write , create and share your stories with
             the world.Whether you are journaling , brainstorming or crafting the
             next big idea, we provide the tools to bring your words to
             life.Start writting today and let your ideas flow freely.
