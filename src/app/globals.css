@@ -5,13 +5,27 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --button-bg: #171717;
+  --nav-bg: #ffffff;
+  --nav-text: #171717;
+  --nav-hover: #1d4ed8; /* Blue-600 */
+  --menu-button: #171717;
+  --dropdown-bg:#ffffff;
+  --dropdown-text:#171717;
+  --dropdown-hover:#f3f4f6;
+  --logout-text:#dc2626;
 }
 
 [data-theme="dark"] {
-  --background: #171717; /* Dark mode background */
-  --foreground: #ffffff; /* Dark mode text color */
-  --button-bg:#ffffff;
+  --background: #171717;
+  --foreground: #ffffff;
+  --nav-bg: #171717; /* Dark navbar background */
+  --nav-text: #ffffff;
+  --nav-hover: #60a5fa; /* Blue-400 */
+  --menu-button: #ffffff;
+  --dropdown-bg:#171717;
+  --dropdown-text:#ffffff;
+  --dropdown-hover:#374151;
+  --logout-text:#f87171;
 }
 
 * {
@@ -25,7 +39,7 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -43,4 +57,41 @@ a {
   max-width: 1536px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Navbar Specific Styles */
+.navbar {
+  background-color: var(--nav-bg);
+  color: var(--nav-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-link {
+  color: var(--nav-text);
+}
+
+.nav-link:hover {
+  color: var(--nav-hover);
+}
+
+.menu-button {
+  color: var(--menu-button);
+}
+
+.mobile-menu {
+  background-color: var(--nav-bg);
+}
+
+.dropdown-menu{
+  background-color:var(--dropdown-bg);
+  color:var(--dropdown-text);
+  transition:background-color 0.3s ease,color 0.3s ease;
+}
+
+.dropdown-link:hover{
+  background-color:var(--dropdown-hover);
+}
+
+.logout{
+  color:var(--logout-text);
 }

@@ -28,18 +28,18 @@ const AuthLinks = () => {
             </span>
             {dropdownOpen && (
               <div
-                className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-lg p-2 z-50"
+                className="dropdown-menu absolute right-0 mt-2 w-40 bg-white shadow-md rounded-lg p-2 z-50"
                 onClick={() => setDropdownOpen(false)} //closing when the div is clicked
               >
                 <Link
                   href="/profile"
                   prefetch={true}
-                  className="block px-4 py-2 hover:bg-gray-100"
+                  className="dropdown-link block px-4 py-2 hover:bg-gray-100 transition-colors"
                 >
                   Profile
                 </Link>
 
-                <span className="cursor-pointer text-red-600" onClick={signOut}>
+                <span className="logout cursor-pointer  block px-4 text-sm transition-colors" onClick={signOut}>
                   Logout
                 </span>
               </div>
