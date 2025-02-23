@@ -10,11 +10,12 @@ const Footer = () => {
     useEffect(() => {
       const fetchCategories = async () => {
         try {
-          const res = await fetch(`/api/categories`, {
+          const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`, {
             cache: "no-cache",
           });
           const data = await res.json();
           setCategories(data);
+          console.log(data,"this  is the data")
         } catch (error) {
           console.error("Failed to fetch categories", error);
         }
@@ -104,9 +105,7 @@ const Footer = () => {
               {category.slug}
             </Link>
           ))}
-           <Link href={`/blog?cat=style`} className="text-gray-500 text-[14px]">
-            Style
-          </Link>
+          
          
          
         </div>
