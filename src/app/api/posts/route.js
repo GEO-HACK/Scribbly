@@ -30,7 +30,10 @@ export const GET = async (req) => {
           },
         },
         _count: {  // ✅ Added: Count number of comments for each post
-          select: { comments: true },
+          select: { comments: true,
+                  
+           },
+          
         },
       },
     });

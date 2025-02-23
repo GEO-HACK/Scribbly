@@ -21,7 +21,7 @@ const Footer = () => {
       };
       fetchCategories();  
     }, []);
-    console.log(categories);
+  
     
   return (
     <div className="flex lg:flex-row flex-col gap-10 lg:gap-[100px] mt-16 mb-5 px-5">

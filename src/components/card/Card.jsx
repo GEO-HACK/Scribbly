@@ -6,9 +6,12 @@ import Link from "next/link";
 import DOMPurify from "dompurify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 
 const Card = ({ item }) => {
+  console.log(item);
   const [liked, setLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(item._count.likes);
 
   const HandleClick = () => {
     setLiked(!liked);
@@ -71,10 +74,10 @@ const Card = ({ item }) => {
                 onClick={HandleClick}
               />
             ) : (
-              <FontAwesomeIcon icon={faHeart} onClick={HandleClick} />
+              <FontAwesomeIcon icon={regularHeart} onClick={HandleClick} />
             )}
             <span className="text-red-600 font-semibold">
-              {item._count.comments}
+              {likesCount + (liked ? 1 : 0)}
             </span>
           </div>
 
