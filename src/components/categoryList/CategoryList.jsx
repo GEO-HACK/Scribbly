@@ -30,6 +30,8 @@ const CategoryList = () => {
     fetchCategories();
   }, []);
 
+  console.log("base url", process.env.NEXT_PUBLIC_API_BASE_URL);
+
   // Hash function for consistent background colors
   const hashId = (id) => id.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
 
