@@ -19,7 +19,7 @@ const CardList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const query = `/api/posts?page=${page}${cat ? `&cat=${cat}` : ""}`;
+        const query = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts?page=${page}${cat ? `&cat=${cat}` : ""}`;
         const res = await fetch(query, { cache: "no-cache" });
 
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
