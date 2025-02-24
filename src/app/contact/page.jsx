@@ -1,10 +1,9 @@
 "use client";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { faEnvelope, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { MapPin, Mail } from "lucide-react"; // Using Lucide Icons
 
-const page = () => {
+const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,10 +13,11 @@ const page = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    //handle form submission logic
+    // Handle form submission logic
   };
 
   return (
@@ -66,14 +66,11 @@ const page = () => {
 
       <div className="mt-12 w-full max-w-3xl">
         <div className="flex items-center space-x-4 text-gray-800 dark:text-white">
-          <FontAwesomeIcon
-            icon={faMapMarkerAlt}
-            className="text-red-600 text-2xl"
-          />
+          <MapPin className="text-red-600 w-6 h-6" />
           <p>Nairobi, Kenya</p>
         </div>
         <div className="flex items-center space-x-4 mt-4 text-gray-800 dark:text-white">
-          <FontAwesomeIcon icon={faEnvelope} className="text-2xl" />
+          <Mail className="w-6 h-6" />
           <p>support@scribbly.com</p>
         </div>
       </div>
@@ -83,7 +80,7 @@ const page = () => {
           width="100%"
           height={400}
           className="w-full h-full rounded-xl"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.093172747502!2d37.015413!3d-1.103177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d4d2c9a47b%3A0x121faaf3c8f4dd0b!2sYour%20Location!5e0!3m2!1sen!2sus!4v1639075685105!5m2!1sen!2sus"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.093172747502!2d37.015413!3d-1.103177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d4d2c9a47b%3A0x121faaf3c8f4dd0b!2sNairobi,%20Kenya!5e0!3m2!1sen!2sus!4v1639075685105!5m2!1sen!2sus"
           allowFullScreen=""
           loading="lazy"
         ></iframe>
@@ -92,4 +89,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ContactPage;
