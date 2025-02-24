@@ -30,4 +30,4 @@ const useCategories = () => {
     return { categories, loading, error };
 }
 
-export default useCategories;
+export default useCategories;   
