@@ -5,22 +5,21 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Card from "../card/Card";
 import Pagination from "../pagination/Pagination";
 
-const CardList = () => {
-  const [data, setData] = useState([]);
+const CardList = ({ initialData }) => {
+  const [data, setData] = useState(initialData || []);
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Extract page and cat from URL parameters
+  // Extract page and category from URL
   const page = parseInt(searchParams.get("page") || "1", 10);
   const cat = searchParams.get("cat") || null;
-
   const [hasNext, setHasNext] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const query = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts?page=${page}${cat ? `&cat=${cat}` : ""}`;
-        const res = await fetch(query, { cache: "no-cache" });
+        const res = await fetch(query, { cache: "force-cache" }); // Allow pre-rendering
 
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const json = await res.json();

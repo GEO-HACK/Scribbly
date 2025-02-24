@@ -1,8 +1,7 @@
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useState } from "react";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { UserCircle } from "lucide-react";
 
 const AuthLinks = () => {
   const { status } = useSession();
@@ -11,25 +10,25 @@ const AuthLinks = () => {
   return (
     <>
       {status === "unauthenticated" ? (
-        <>
-          <Link href="/login" prefetch={true}>login</Link>
-        </>
+        <Link href="/login" prefetch={true}>login</Link>
       ) : (
         <>
           <Link href="/write" prefetch={true}>write</Link>
 
           <div className="relative">
-            {/* profile icon */}
+            {/* Profile Icon */}
             <span
               className="cursor-pointer flex items-center gap-2"
               onClick={() => setDropdownOpen(!dropdownOpen)}
             >
-              <FontAwesomeIcon icon={faUserCircle} className="text-2xl" />
+              <UserCircle className="w-6 h-6 text-gray-700" />
             </span>
+
+            {/* Dropdown Menu */}
             {dropdownOpen && (
               <div
                 className="dropdown-menu absolute right-0 mt-2 w-40 bg-white shadow-md rounded-lg p-2 z-50"
-                onClick={() => setDropdownOpen(false)} //closing when the div is clicked
+                onClick={() => setDropdownOpen(false)} // Close dropdown when clicked
               >
                 <Link
                   href="/profile"
@@ -39,7 +38,10 @@ const AuthLinks = () => {
                   Profile
                 </Link>
 
-                <span className="logout cursor-pointer  block px-4 text-sm transition-colors" onClick={signOut}>
+                <span 
+                  className="logout cursor-pointer block px-4 text-sm transition-colors" 
+                  onClick={signOut}
+                >
                   Logout
                 </span>
               </div>

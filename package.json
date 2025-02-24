@@ -6,7 +6,7 @@
     "postinstall": "npx prisma generate",
     "dev": "next dev",
     "build": "npx prisma generate && next build",
-    "start": "next start",
+    "start": "next start ",
     "lint": "next lint",
     "prisma": "npx prisma generate"
   },
@@ -38,6 +38,7 @@
     "framer-motion": "^11.18.1",
     "highlight.js": "^11.11.1",
     "lowlight": "^3.3.0",
+    "lucide-react": "^0.475.0",
     "mongodb": "^6.12.0",
     "next": "^15.1.3",
     "next-auth": "^4.24.7",
