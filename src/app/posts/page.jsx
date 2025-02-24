@@ -24,7 +24,7 @@ const PageContent = ({ cat, all }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const query = `/api/posts?all=true${cat ? `&cat=${cat}` : ""}` // Fetch all posts
+        const query = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts?all=true${cat ? `&cat=${cat}` : ""}` // Fetch all posts
         const res = await fetch(query, { cache: "no-cache" });
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const json = await res.json();
