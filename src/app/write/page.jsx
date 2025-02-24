@@ -18,6 +18,7 @@ import slugify from "slugify";
 import { common, createLowlight } from "lowlight";
 import ResizableImageExtension from "@/components/resizableImageExtension/ResizableImageExtension";
 import "highlight.js/styles/github-dark.css";
+import useCategories from "@/hooks/useCategories";
 
 // Initialize syntax highlighting
 const lowlight = createLowlight(common);
@@ -33,28 +34,15 @@ const Page = () => {
   const [file, setFile] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);  // New state to control dropdown visibility
   // states for the fetching of categories from the database
-  const [categories, setCategories] = useState([]);
+
   const [ selectedCategory, setSelectedCategory] = useState("");
   //image url
   const [img, setImg] = useState("");
   // state of the title
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const  { categories, loading, error } = useCategories();
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await fetch(`/api/categories`, {
-          cache: "no-cache",
-        });
-        const data = await res.json();
-        setCategories(data);
-      } catch (error) {
-        console.error("Failed to fetch categories", error);
-      }
-    };
-    fetchCategories();  
-  }, []);
   
 
   const handleSave = async () => {
