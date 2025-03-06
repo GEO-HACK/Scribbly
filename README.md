@@ -4,7 +4,9 @@ Flownote is a dynamic and intuitive platform designed to enhance content creatio
 
 # Overview
 ![Hero Section](public/screenshots/screen3.png)
+
 ![Posts Section](public/screenshots/screen2.png)
+
 ![Blog Page](public/screenshots/scrren1.png)
 
 
@@ -69,7 +71,5 @@ Flownote is optimized for deployment on Vercel. To deploy:
 
 Contributions are welcome! Please fork the repository, create a feature branch, and submit a pull request.
 
-## License
 
-This project is licensed under the MIT License.
 
