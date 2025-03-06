@@ -4,7 +4,7 @@ import Link from "next/link";
 import MenuPosts from "../menuPosts/MenuPosts";
 import MenuCategory from "../menucategory/MenuCategory";
 
-const Menu = () => {
+const   Menu = () => {
   return (
     <div className="max-w-[30%] mt-[30px] hidden lg:block md:block">
       <h2 className="text-gray-500 font-semibold">what's hot</h2>
