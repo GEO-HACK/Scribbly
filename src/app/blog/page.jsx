@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { Suspense } from "react";
 import CardList from "@/components/cardList/CardList";
 import Menu from "@/components/menu/Menu";
