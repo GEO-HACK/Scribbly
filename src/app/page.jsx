@@ -1,3 +1,6 @@
+export const dynamic = 'force-dynamic'
+
+
 import { Suspense } from "react";
 import Featured from "@/components/featured/Featured";
 import CategoryList from "@/components/categoryList/CategoryList";
