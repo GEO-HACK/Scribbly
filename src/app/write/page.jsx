@@ -1,4 +1,5 @@
 "use client";
+export const dynmic = 'force-dynamic'
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -204,6 +205,7 @@ const Page = () => {
           onClick={() => editor.chain().focus().toggleItalic().run()}
           className="px-4 py-2 text-gray-700 italic hover:bg-blue-100 rounded-md border border-gray-300"
         >
+
           I
         </button>
         <button
