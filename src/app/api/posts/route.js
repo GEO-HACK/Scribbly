@@ -29,9 +29,10 @@ export const GET = async (req) => {
             email: true,
           },
         },
-        _count: {  // ✅ Count number of comments for each post
+        _count: {  // ✅ Count number of comments and likes for each post
           select: {
              comments: true,
+             likes: true,
            },
         },
       },
