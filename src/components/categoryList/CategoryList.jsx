@@ -1,41 +1,31 @@
-"use client"; // This forces it to run on the client
-
-import React, { useEffect, useState } from "react";
+// Server Component - renders on the server
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const CategoryList = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+// Server-side data fetching function
+async function getCategories() {
+  try {
+    // Use internal API URL for server-side fetching
+    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/categories`, {
+      cache: "no-store", // Always fetch fresh data
+    });
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories`, {
-          cache: "no-cache",
-        });
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching categories:", error.message);
+    return [];
+  }
+}
 
-        const data = await res.json();
-        setCategories(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error.message);
-        setCategories([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
-  console.log("base url", process.env.NEXT_PUBLIC_API_BASE_URL);
-
+const CategoryList = async () => {
+  const categories = await getCategories();
+  
   // Hash function for consistent background colors
   const hashId = (id) => id.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
-
-  if (loading) return <p className="text-center text-gray-600">Loading categories...</p>;
 
   if (categories.length === 0) {
     return (

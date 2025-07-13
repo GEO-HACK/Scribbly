@@ -5,7 +5,7 @@ import Link from "next/link";
 const Featured = () => {
   return (
     <div className="mt-8 px-4 lg:px-0">
-      <h1 className="text-2xl lg:text-2xl font-bold text-center lg:text-left">
+      <h1 className="text-2xl lg:text-2xl font-bold dark:text-orange-400 text-center lg:text-left">
         <b>Hello devs !!</b> Discover my stories and new Creative ideas in the
         tech industry
       </h1>

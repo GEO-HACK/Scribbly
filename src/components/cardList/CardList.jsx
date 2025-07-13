@@ -1,60 +1,42 @@
-"use client";
+// Server Component - handles initial data fetching
+import React from "react";
+import CardListClient from "./CardListClient";
 
-import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import Card from "../card/Card";
-import Pagination from "../pagination/Pagination";
+// Server-side data fetching function
+async function getPosts(page = 1, cat = null) {
+  try {
+    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const query = `${baseUrl}/api/posts?page=${page}${cat ? `&cat=${cat}` : ""}`;
+    const res = await fetch(query, { 
+      cache: "no-store", // Always fetch fresh data
+      next: { revalidate: 0 } // Disable caching for dynamic content
+    });
 
-const CardList = ({ initialData }) => {
-  const [data, setData] = useState(initialData || []);
-  const searchParams = useSearchParams();
-  const router = useRouter();
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    return [];
+  }
+}
 
-  // Extract page and category from URL
-  const page = parseInt(searchParams.get("page") || "1", 10);
-  const cat = searchParams.get("cat") || null;
-  const [hasNext, setHasNext] = useState(true);
+const CardList = async ({ searchParams }) => {
+  // Extract search params on server
+  const page = parseInt(searchParams?.page || "1", 10);
+  const cat = searchParams?.cat || null;
+  
+  // Fetch initial data on server
+  const initialData = await getPosts(page, cat);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const query = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts?page=${page}${cat ? `&cat=${cat}` : ""}`;
-        const res = await fetch(query, { cache: "force-cache" }); // Allow pre-rendering
-
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const json = await res.json();
-
-        setData(json);
-        setHasNext(json.length > 0);
-      } catch (error) {
-        console.error("Error fetching posts:", error.message);
-        setData([]);
-        setHasNext(false);
-      }
-    };
-
-    fetchData();
-  }, [page, cat]);
-
-  // Update URL when page or cat changes
-  useEffect(() => {
-    const currentPath = window.location.pathname;
-    router.push(`${currentPath}?page=${page}${cat ? `&cat=${cat}` : ""}`);
-  }, [page, cat]);
-
+  // Pass data to client component for interactivity
   return (
-    <div className="max-w-[70%]">
-      <h1 className="font-semibold text-xl mt-4 mb-4">Recent Posts</h1>
-      <div className="flex flex-col">
-        {data.length > 0 ? (
-          data.map((item) => <Card key={item.id} item={item} />)
-        ) : (
-          <p>No posts available.</p>
-        )}
-      </div>
-      <Pagination page={page} hasNext={hasNext} />
-    </div>
+    <CardListClient 
+      initialData={initialData}
+      initialPage={page}
+      initialCat={cat}
+    />
   );
+
 };
 
 export default CardList;
