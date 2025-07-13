@@ -64,7 +64,7 @@ const CardListClient = ({ initialData, initialPage, initialCat }) => {
       
       <div className="flex flex-col min-h-[400px] relative">
         {loading && (
-          <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-10">
+          <div className="absolute inset-0 flex items-center justify-center z-10">
             <div className="text-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600 mx-auto"></div>
               <p className="mt-2 text-gray-600">Loading posts...</p>

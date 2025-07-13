@@ -29,9 +29,10 @@ export const GET = async (req) => {
             email: true,
           },
         },
-        _count: {  // ✅ Count number of comments for each post
+        _count: {  // ✅ Count number of comments and likes for each post
           select: {
              comments: true,
+             likes: true,
            },
         },
       },
@@ -74,9 +75,23 @@ export const POST = async (req) => {
 
     const { title, desc, catSlug, img, slug } = body;
 
-    // Validate required fields
+    // Validate required fields (including image)
     if (!title || !desc || !catSlug || !img || !slug) {
-      return NextResponse.json({ error: "All fields are required!" }, { status: 400 });
+      return NextResponse.json({ error: "All fields including image are required!" }, { status: 400 });
+    }
+
+    // Validate fields are not empty strings
+    if (title.trim() === '' || desc.trim() === '' || catSlug.trim() === '' || slug.trim() === '' || img.trim() === '') {
+      return NextResponse.json({ error: "All fields must have valid content!" }, { status: 400 });
+    }
+
+    // ✅ Check if slug already exists
+    const existingPost = await prisma.post.findUnique({
+      where: { slug },
+    });
+
+    if (existingPost) {
+      return NextResponse.json({ error: "A post with this title already exists!" }, { status: 400 });
     }
 
     // ✅ Log existing user
@@ -105,11 +120,25 @@ export const POST = async (req) => {
         title,
         desc,
         catSlug,
-        img,
+        img, // Required field
         slug,
         userEmail,
         views: 0,
-        user: { connect: { email: userEmail } },
+      },
+      include: {
+        user: {
+          select: {
+            name: true,
+            image: true,
+            email: true,
+          },
+        },
+        _count: {
+          select: {
+            comments: true,
+            likes: true,
+          },
+        },
       },
     });
 
