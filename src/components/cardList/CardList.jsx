@@ -13,7 +13,13 @@ async function getPosts(page = 1, cat = null) {
     });
 
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-    return await res.json();
+    const result = await res.json();
+    
+    // Handle new API response format
+    if (result.posts) {
+      return result.posts; // Return just the posts array for initial data
+    }
+    return result; // Fallback for old format
   } catch (error) {
     console.error("Error fetching posts:", error.message);
     return [];
