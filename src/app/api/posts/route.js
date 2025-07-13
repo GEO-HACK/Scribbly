@@ -19,26 +19,39 @@ export const GET = async (req) => {
     // 🚀 Fetch posts with user details & comment count
     const posts = await prisma.post.findMany({
       where: filter,
-      take: fetchAll ? undefined : POST_PER_PAGE,
+      take: fetchAll ? undefined : POST_PER_PAGE + 1, // Take one extra to check if there are more
       skip: fetchAll ? undefined : (page - 1) * POST_PER_PAGE,
       include: {
-        user: {  // ✅ Added: Include user details (image, name, email)
+        user: {  // ✅ Include user details (image, name, email)
           select: {
             name: true,
             image: true,
             email: true,
           },
         },
-        _count: {  // ✅ Added: Count number of comments for each post
+        _count: {  // ✅ Count number of comments for each post
           select: {
              comments: true,
-             
-                  
            },
-          
         },
       },
+      orderBy: {
+        createdAt: 'desc', // ✅ Order by newest first
+      },
     });
+
+    // If not fetching all, handle pagination
+    if (!fetchAll) {
+      const hasMore = posts.length > POST_PER_PAGE;
+      const actualPosts = hasMore ? posts.slice(0, POST_PER_PAGE) : posts;
+      
+      return NextResponse.json({
+        posts: actualPosts,
+        hasMore,
+        currentPage: page,
+        totalPosts: await prisma.post.count({ where: filter }),
+      }, { status: 200 });
+    }
 
     return NextResponse.json(posts, { status: 200 });
   } catch (error) {
