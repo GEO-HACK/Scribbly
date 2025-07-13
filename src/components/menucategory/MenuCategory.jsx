@@ -1,15 +1,23 @@
+// Server Component - renders categories on the server
 import React from 'react'
 import Link from 'next/link'
 
 const getData = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories`, {
-   next: { revalidate: 60 },
-  });
+  try {
+    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/categories`, {
+      cache: "force-cache", // Cache categories for better performance
+      next: { revalidate: 3600 }, // Revalidate every hour
+    });
 
-  if (!res.ok) {
-    throw new Error("Something went wrong");
+    if (!res.ok) {
+      throw new Error("Something went wrong");
+    }
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return [];
   }
-  return res.json();
 } 
 
 const hashId = (id) => {  
