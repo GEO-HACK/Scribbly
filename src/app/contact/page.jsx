@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = 'force-dynamic'
 
 import { useState } from "react";
 import { MapPin, Mail } from "lucide-react"; // Using Lucide Icons

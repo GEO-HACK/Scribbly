@@ -6,6 +6,11 @@ import Link from "next/link";
 // Server-side data fetching function
 async function getCategories() {
   try {
+    // Skip fetching during build time
+    if (!process.env.NEXTAUTH_URL && process.env.NODE_ENV === 'production') {
+      return [];
+    }
+
     // Use internal API URL for server-side fetching
     const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
     const res = await fetch(`${baseUrl}/api/categories`, {
