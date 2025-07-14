@@ -7,6 +7,7 @@ export const GET = async (req) => {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page")) || 1;
     const category = searchParams.get("cat") || null;
+    const userEmail = searchParams.get("userEmail") || null;
     const fetchAll = searchParams.get("all") === "true";
     const POST_PER_PAGE = 2;
 
@@ -14,6 +15,9 @@ export const GET = async (req) => {
     const filter = {};
     if (category) {
       filter.catSlug = category; // Filter posts by category slug
+    }
+    if (userEmail) {
+      filter.userEmail = userEmail; // Filter posts by user email
     }
 
     // 🚀 Fetch posts with user details & comment count
