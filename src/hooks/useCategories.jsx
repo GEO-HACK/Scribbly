@@ -10,23 +10,37 @@ const useCategories = () => {
 
 
     useEffect(() => {   
+        // Only fetch on client side to prevent SSG issues
+        if (typeof window === 'undefined') {
+            setLoading(false);
+            setCategories([]);
+            return;
+        }
+
         const fetchCategories = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories`, {
+                // Use relative URL for API calls
+                const res = await fetch('/api/categories', {
                     cache: "no-cache",
                 });
+                
+                if (!res.ok) {
+                    throw new Error(`Failed to fetch: ${res.status}`);
+                }
+                
                 const data = await res.json();
                 setCategories(data);
-                setLoading(false);
             } catch (error) {
-                console.error("Failed to fetch categories", error);
+                console.error("Error fetching categories:", error);
                 setError(error);
+                setCategories([]);
+            } finally {
                 setLoading(false);
             }
         };
+
         fetchCategories();  
-    }
-    , []);
+    }, []);
     return { categories, loading, error };
 }
 
