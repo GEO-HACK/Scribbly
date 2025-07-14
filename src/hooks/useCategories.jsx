@@ -10,38 +10,36 @@ const useCategories = () => {
 
 
     useEffect(() => {   
+        // Only fetch on client side to prevent SSG issues
+        if (typeof window === 'undefined') {
+            setLoading(false);
+            setCategories([]);
+            return;
+        }
+
         const fetchCategories = async () => {
             try {
-                // Use relative URL for API calls to work in all environments
-                const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
-                const res = await fetch(`${baseUrl}/api/categories`, {
+                // Use relative URL for API calls
+                const res = await fetch('/api/categories', {
                     cache: "no-cache",
                 });
                 
                 if (!res.ok) {
-                    throw new Error(`Failed to fetch categories: ${res.status}`);
+                    throw new Error(`Failed to fetch: ${res.status}`);
                 }
                 
                 const data = await res.json();
                 setCategories(data);
-                setLoading(false);
             } catch (error) {
                 console.error("Error fetching categories:", error);
                 setError(error);
-                setLoading(false);
-                // Set empty categories on error to prevent build failures
                 setCategories([]);
+            } finally {
+                setLoading(false);
             }
         };
 
-        // Only fetch on client side
-        if (typeof window !== 'undefined') {
-            fetchCategories();  
-        } else {
-            // During SSR/build, set loading to false with empty categories
-            setLoading(false);
-            setCategories([]);
-        }
+        fetchCategories();  
     }, []);
     return { categories, loading, error };
 }
