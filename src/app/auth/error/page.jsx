@@ -2,10 +2,10 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { AlertCircle, Link as LinkIcon, ArrowRight } from "lucide-react";
 
-const AuthErrorPage = () => {
+const AuthErrorContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
@@ -152,6 +152,18 @@ const AuthErrorPage = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const AuthErrorPage = () => {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+      </div>
+    }>
+      <AuthErrorContent />
+    </Suspense>
   );
 };
 
