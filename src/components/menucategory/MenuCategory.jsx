@@ -1,4 +1,4 @@
-// Server Component - renders categories on the server
+
 import React from 'react'
 import Link from 'next/link'
 
