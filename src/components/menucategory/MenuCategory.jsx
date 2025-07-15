@@ -4,22 +4,8 @@ import Link from 'next/link'
 
 const getData = async () => {
   try {
-
-    // Skip fetching during build time
-    if (!process.env.NEXTAUTH_URL && process.env.NODE_ENV === 'production') {
-      return [];
-    }
-
-    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/categories`, {
-      cache: "force-cache", // Cache categories for better performance
-      next: { revalidate: 3600 }, // Revalidate every hour
-    });
-
-    if (!res.ok) {
-      throw new Error("Something went wrong");
-    }
-    return res.json();
+    // Return empty array during build to prevent API calls
+    return [];
   } catch (error) {
     console.error("Error fetching categories:", error);
     return [];

@@ -1,32 +1,28 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const getCategories = async () => {
-  try {
-    // Skip fetching during build time
-    if (!process.env.NEXT_PUBLIC_API_BASE_URL && process.env.NODE_ENV === 'production') {
-      return [];
-    }
+const Footer = () => {
+  const [categories, setCategories] = useState([]);
 
-    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/categories`, {
-      cache: "no-cache",
-    });
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch('/api/categories');
+        if (res.ok) {
+          const data = await res.json();
+          setCategories(data);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        setCategories([]);
+      }
+    };
 
-    if (!res.ok) {
-      const errorText = await res.text();
-      throw new Error(`HTTP error! status: ${res.status}, message: ${errorText}`);
-    }
-
-    return await res.json();
-  } catch (error) {
-    console.error("Error fetching categories:", error.message);
-    return [];
-  }
-};
-
-const Footer = async () => {
-  const categories = await getCategories();
+    fetchCategories();
+  }, []);
 
   return (
     <div className="flex lg:flex-row flex-col gap-10 lg:gap-[100px] mt-16 mb-5 px-5">
