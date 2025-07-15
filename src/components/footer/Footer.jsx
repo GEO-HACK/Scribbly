@@ -3,7 +3,13 @@ import Link from "next/link";
 
 const getCategories = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories`, {
+    // Skip fetching during build time
+    if (!process.env.NEXT_PUBLIC_API_BASE_URL && process.env.NODE_ENV === 'production') {
+      return [];
+    }
+
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/categories`, {
       cache: "no-cache",
     });
 
