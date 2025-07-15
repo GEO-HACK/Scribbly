@@ -155,3 +155,65 @@ export const POST = async (req) => {
   }
 };
 
+export const DELETE = async (req, {params}) => {
+  try {
+    const {id } = params;
+
+    // gettig the user for authorization
+    const session = await getAuthSession();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized!" }, { status: 401 });
+    }
+
+    const userEmail = session.user.email;
+
+    //now checkingthe existence of the post
+    const post = await prisma.post.findunique({
+      where: { id },
+      select:{
+        id: true,
+        title:true,
+        userEmail: true,
+        slug:true,
+      },
+    })
+    if (!post) {
+      return NextResponse.json({ error: "Post not found!" }, { status: 404 });
+    }
+    if (post.userEmail !== userEmail) {
+      return NextResponse.json({ error: "You are not authorized to delete this post!" }, { status: 403 });
+    }
+
+    // Delete the post
+    await prisma.post.delete({
+      where: { id },
+    });
+    
+    await prisma.like.deleteMany({
+      where: { postSlug: post.slug },
+    });
+    await prisma.comment.deleteMany({
+      where: { postSlug: post.slug },
+    });
+    await prisma.view.deleteMany({
+      where: { postSlug: post.slug },
+    });
+
+    return NextResponse.json({ 
+      message: "Post deleted successfully!",
+      deletedPost:{
+        id: post.id,
+        title: post.title,
+        slug: post.slug
+      }
+    
+    
+    }, { status: 200 });
+    
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    return NextResponse.json({ error: "Failed to delete post!" }, { status: 500 });
+  }
+  
+}
+

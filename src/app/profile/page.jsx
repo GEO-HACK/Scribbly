@@ -60,6 +60,31 @@ const ProfilePage = () => {
     }
   };
 
+  const handlePostDelete = async (postId) => {
+    if (!confirm("Are you sure you want to delete this post?")) return;
+    try {
+      const res = await fetch(`/api/posts/${postId}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        setPosts(posts.filter(post => post.id !== postId));
+        // Update stats
+        setStats(prevStats => ({
+          ...prevStats,
+          totalPosts: prevStats.totalPosts - 1,
+          totalLikes: prevStats.totalLikes - (posts.find(post => post.id === postId)?._count?.likes || 0),
+          totalComments: prevStats.totalComments - (posts.find(post => post.id === postId)?._count?.comments || 0)
+        }));
+      } else {
+        const errorData = await res.json();
+        console.error("Failed to delete post:", errorData.error);
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
+
+
   const sanitizeContent = (html) => {
     return DOMPurify.sanitize(html, { ALLOWED_TAGS: [] });
   };
@@ -273,6 +298,10 @@ const ProfilePage = () => {
                             <button
                               className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                               title="Delete Post"
+                              onClick={() =>{
+                                
+
+                               console.log("button ha")}}
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
