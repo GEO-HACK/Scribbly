@@ -6,6 +6,7 @@ import Link from "next/link";
 // Server-side data fetching function
 async function getCategories() {
   try {
+
     // Skip fetching during build time
     if (!process.env.NEXTAUTH_URL && process.env.NODE_ENV === 'production') {
       return [];
@@ -18,6 +19,8 @@ async function getCategories() {
     });
 
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+
 
     return await res.json();
   } catch (error) {

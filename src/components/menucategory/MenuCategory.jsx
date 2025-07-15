@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 const getData = async () => {
   try {
+
     // Skip fetching during build time
     if (!process.env.NEXTAUTH_URL && process.env.NODE_ENV === 'production') {
       return [];
